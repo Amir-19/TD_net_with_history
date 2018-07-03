@@ -41,7 +41,7 @@ class OneBitGridWorld:
             return False
         if _position in self.obstacles:
             return False
-
+        return True
     '''
         add an obstacle to the list of obstacles
     '''
@@ -68,7 +68,7 @@ class OneBitGridWorld:
             self.agent_position = next_position
 
     '''
-     turn agent's direction clockwise
+        turn agent's direction clockwise
     '''
     def turn_clockwise(self):
 
@@ -83,3 +83,23 @@ class OneBitGridWorld:
 
         elif self.agent_direction == Direction.West:
             self.agent_direction = Direction.North
+
+    '''
+        return the agent's observation which is 1 if facing an obstacle, 0 otherwise
+    '''
+    def get_observation(self):
+
+        next_position = self.agent_position.copy()
+        if self.agent_direction == Direction.North:
+            next_position[0] -=1
+        elif self.agent_direction == Direction.East:
+            next_position[1] +=1
+        elif self.agent_direction == Direction.South:
+            next_position[0] +=1
+        elif self.agent_direction == Direction.West:
+            next_position[1] -=1
+
+        if not self.is_in_grid(next_position):
+            return 1
+        else:
+            return 0

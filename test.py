@@ -1,0 +1,17 @@
+from one_bit_gridworld import *
+
+gw = OneBitGridWorld(4,3,[[1,1],[2,1]],[3,0],Direction.North)
+print(gw.agent_position)
+gw.move_forward()
+gw.move_forward()
+gw.move_forward()
+gw.turn_clockwise()
+gw.move_forward()
+gw.move_forward()
+gw.turn_clockwise()
+gw.move_forward()
+gw.move_forward()
+gw.turn_clockwise()
+gw.move_forward()
+gw.move_forward()
+print(gw.agent_position)
