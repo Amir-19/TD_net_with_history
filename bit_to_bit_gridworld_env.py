@@ -22,6 +22,7 @@ class BitToBitGridWorld:
     """
     def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction, _draw):
 
+        # environment attributes
         self.m = _m
         self.n = _n
         self.obstacles = []
@@ -30,15 +31,19 @@ class BitToBitGridWorld:
         self.agent_position = _agent_position
         self.agent_direction = _agent_direction
 
+        # graphics stuff
         self.xsize = _n+2
         self.ysize = _m+2
         self.blocksize = 30
+        self.draw = _draw
         if _draw:
-            self.window = Gwindow(gdViewport = (20,25,800,600))
+            self.window = Gwindow(gdViewport = (20, 25, 800, 600))
             self.draw_gridworld()
             self.agent = None
             self.agent = self.draw_agent()
+            self.add_control_menu()
             gMakeVisible(self.window)
+            gMainLoop()
 
     """
         check whether a position is in the grid or not. It also checks whether the position is
@@ -68,16 +73,20 @@ class BitToBitGridWorld:
 
         next_position = self.agent_position.copy()
         if self.agent_direction == Direction.North:
-            next_position[0] -= 1
+            next_position[0] += 1
         elif self.agent_direction == Direction.East:
             next_position[1] += 1
         elif self.agent_direction == Direction.South:
-            next_position[0] += 1
+            next_position[0] -= 1
         elif self.agent_direction == Direction.West:
             next_position[1] -= 1
 
         if self.is_in_grid(next_position):
             self.agent_position = next_position
+
+        if self.draw:
+            self.draw_agent()
+            print(self.agent_position,self.agent_direction)
 
     """
         turn agent's direction clockwise
@@ -95,6 +104,10 @@ class BitToBitGridWorld:
 
         elif self.agent_direction == Direction.West:
             self.agent_direction = Direction.North
+
+        if self.draw:
+            self.draw_agent()
+            print(self.agent_position,self.agent_direction)
 
     """
         return the agent's observation which is 1 if facing an obstacle, 0 otherwise
@@ -141,17 +154,22 @@ class BitToBitGridWorld:
 
         if self.agent_direction == Direction.East:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+2)*self.blocksize)-(self.blocksize/5),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20,160,40)
+                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, 160, 40)
         elif self.agent_direction == Direction.South:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
-                                  ((self.m-self.agent_position[0]+1)*self.blocksize)-(self.blocksize/5), 20,70,40)
+                                  ((self.m-self.agent_position[0]+1)*self.blocksize)-(self.blocksize/5), 20, 70, 40)
         elif self.agent_direction == Direction.West:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/5),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20,-20,40)
+                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, -20, 40)
         elif self.agent_direction == Direction.North:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/5), 20,250,40)
+                                  ((self.m - self.agent_position[0])*self.blocksize)+(self.blocksize/5), 20, 250, 40)
 
         gMakeVisible(self.window)
         return self.agent
+
+    def add_control_menu(self):
+        backColor = gColorLightGray(self.window)
+        gdAddButton(self.window,'Step Forward',self.move_forward,70,275,backColor)
+        gdAddButton(self.window,'Turn CW',self.turn_clockwise,25,310,backColor)
 
