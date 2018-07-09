@@ -2,21 +2,21 @@ import numpy as np
 from enum import Enum
 
 
-
 class Direction(Enum):
     North = 1
     East = 2
     South = 3
     West = 4
 
+
 class Action(Enum):
     Forward = 0
     Rotate = 1
 
+
 class Observation(Enum):
     White = 0
     Black = 1
-
 
 
 class BitToBitGridWorld:
@@ -40,7 +40,6 @@ class BitToBitGridWorld:
         self.agent_position = _agent_position
         self.agent_direction = _agent_direction
 
-
     """
         check whether a position is in the grid or not. It also checks whether the position is
         on of the obstacles or not. In other words, it checks whether agent can be on the
@@ -55,6 +54,7 @@ class BitToBitGridWorld:
         if _position in self.obstacles:
             return False
         return True
+
     """
         add an obstacle to the list of obstacles
     """
@@ -79,7 +79,6 @@ class BitToBitGridWorld:
 
         if self.is_in_grid(next_position):
             self.agent_position = next_position
-
 
     """
         turn agent's direction clockwise
@@ -117,5 +116,3 @@ class BitToBitGridWorld:
             return 1
         else:
             return 0
-
-

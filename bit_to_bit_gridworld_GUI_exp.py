@@ -54,7 +54,7 @@ class BitToBitGridWorldGUI():
         gDelete(self.window, self.agent)
         self.agent_direction = self.environment.agent_direction
         self.agent_position = self.environment.agent_position
-        
+
         if self.agent_direction == Direction.East:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+2)*self.blocksize)-(self.blocksize/5),
                                   ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, 160, 40)
@@ -78,7 +78,7 @@ class BitToBitGridWorldGUI():
     def rotate_agent_gui(self):
         self.environment.turn_clockwise()
         self.draw_agent()
-        print("haha")
+
 
     """
         draw the control menu (buttons)
