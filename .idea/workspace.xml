@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3ba0435c-a3d5-4092-89d4-51c235963b8f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bit_to_bit_gridworld_GUI_exp.py" afterPath="$PROJECT_DIR$/bit_to_bit_gridworld_GUI_exp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bit_to_bit_gridworld_env.py" afterPath="$PROJECT_DIR$/bit_to_bit_gridworld_env.py" />
     </list>
     <ignored path="TD_net_with_history.iws" />
@@ -51,11 +50,9 @@
       <file leaf-file-name="bit_to_bit_gridworld_env.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_env.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.4496645">
-              <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-1.47651">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -120,8 +117,8 @@
         <option value="$PROJECT_DIR$/tdnet_test.py" />
         <option value="$PROJECT_DIR$/bit_to_bit_gridworld_exp.py" />
         <option value="$PROJECT_DIR$/bit_to_bit_gridworld_agent.py" />
-        <option value="$PROJECT_DIR$/bit_to_bit_gridworld_env.py" />
         <option value="$PROJECT_DIR$/bit_to_bit_gridworld_GUI_exp.py" />
+        <option value="$PROJECT_DIR$/bit_to_bit_gridworld_env.py" />
       </list>
     </option>
   </component>
@@ -567,9 +564,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="152" column="22" selection-start-line="152" selection-start-column="22" selection-end-line="152" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -629,9 +624,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -663,9 +656,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -697,9 +688,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -731,9 +720,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -869,11 +856,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_env.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4496645">
-          <caret line="118" column="0" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-1.47651">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
