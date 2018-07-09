@@ -1,6 +1,6 @@
 import numpy as np
 from enum import Enum
-from g import *
+
 
 
 class Direction(Enum):
@@ -29,7 +29,7 @@ class BitToBitGridWorld:
         _agent_position: the agent's current position on the grid
         _agent_direction: the agent's current direction
     """
-    def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction, _draw):
+    def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction):
 
         # environment attributes
         self.m = _m
@@ -40,19 +40,6 @@ class BitToBitGridWorld:
         self.agent_position = _agent_position
         self.agent_direction = _agent_direction
 
-        # graphics stuff
-        self.xsize = _n+2
-        self.ysize = _m+2
-        self.blocksize = 30
-        self.draw = _draw
-        if self.draw:
-            self.window = Gwindow(gdViewport = (20, 25, 800, 600))
-            self.draw_gridworld()
-            self.agent = None
-            self.agent = self.draw_agent()
-            self.add_control_menu()
-            gMakeVisible(self.window)
-            gMainLoop()
 
     """
         check whether a position is in the grid or not. It also checks whether the position is
@@ -93,9 +80,6 @@ class BitToBitGridWorld:
         if self.is_in_grid(next_position):
             self.agent_position = next_position
 
-        if self.draw:
-            self.draw_agent()
-            print(self.agent_position,self.agent_direction,self.get_observation())
 
     """
         turn agent's direction clockwise
@@ -113,10 +97,6 @@ class BitToBitGridWorld:
 
         elif self.agent_direction == Direction.West:
             self.agent_direction = Direction.North
-
-        if self.draw:
-            self.draw_agent()
-            print(self.agent_position,self.agent_direction,self.get_observation())
 
     """
         return the agent's observation which is 1 if facing an obstacle, 0 otherwise
@@ -138,50 +118,4 @@ class BitToBitGridWorld:
         else:
             return 0
 
-    """
-        draw the gridworld
-    """
-    def draw_gridworld(self):
-        gdFillRectR(self.window, 0,0, self.xsize*self.blocksize-1,self.ysize*self.blocksize,'white')
-        for i in range(1,self.xsize):
-            gdDrawLine(self.window, i*self.blocksize,30,i*self.blocksize, self.ysize*self.blocksize-30,'grey')
-        for i in range(1,self.ysize):
-            gdDrawLine(self.window, 30, i*self.blocksize, self.xsize*self.blocksize-30, i*self.blocksize, 'grey')
-
-        for i in range(self.m):
-            for j in range(self.n):
-                if [i,j] in self.obstacles:
-                    gdFillRectR(self.window,(j+1)*self.blocksize, (self.m - i)*self.blocksize,self.blocksize-1,
-                                self.blocksize-1,'black')
-
-    """
-        draw the agent
-    """
-    def draw_agent(self):
-
-        gDelete(self.window, self.agent)
-
-        if self.agent_direction == Direction.East:
-            self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+2)*self.blocksize)-(self.blocksize/5),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, 160, 40)
-        elif self.agent_direction == Direction.South:
-            self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
-                                  ((self.m-self.agent_position[0]+1)*self.blocksize)-(self.blocksize/5), 20, 70, 40)
-        elif self.agent_direction == Direction.West:
-            self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/5),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, -20, 40)
-        elif self.agent_direction == Direction.North:
-            self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
-                                  ((self.m - self.agent_position[0])*self.blocksize)+(self.blocksize/5), 20, 250, 40)
-
-        gMakeVisible(self.window)
-        return self.agent
-
-    """
-        draw the control menu (buttons)
-    """
-    def add_control_menu(self):
-        back_color = gColorLightGray(self.window)
-        gdAddButton(self.window, 'Step Forward', self.move_forward, 70, 275, back_color)
-        gdAddButton(self.window, 'Turn CW', self.turn_clockwise, 70, 310, back_color)
 
