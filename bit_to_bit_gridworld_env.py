@@ -9,6 +9,15 @@ class Direction(Enum):
     South = 3
     West = 4
 
+class Action(Enum):
+    Forward = 0
+    Rotate = 1
+
+class Observation(Enum):
+    White = 0
+    Black = 1
+
+
 
 class BitToBitGridWorld:
 
@@ -36,7 +45,7 @@ class BitToBitGridWorld:
         self.ysize = _m+2
         self.blocksize = 30
         self.draw = _draw
-        if _draw:
+        if self.draw:
             self.window = Gwindow(gdViewport = (20, 25, 800, 600))
             self.draw_gridworld()
             self.agent = None
@@ -86,7 +95,7 @@ class BitToBitGridWorld:
 
         if self.draw:
             self.draw_agent()
-            print(self.agent_position,self.agent_direction)
+            print(self.agent_position,self.agent_direction,self.get_observation())
 
     """
         turn agent's direction clockwise
@@ -107,7 +116,7 @@ class BitToBitGridWorld:
 
         if self.draw:
             self.draw_agent()
-            print(self.agent_position,self.agent_direction)
+            print(self.agent_position,self.agent_direction,self.get_observation())
 
     """
         return the agent's observation which is 1 if facing an obstacle, 0 otherwise
@@ -116,11 +125,11 @@ class BitToBitGridWorld:
 
         next_position = self.agent_position.copy()
         if self.agent_direction == Direction.North:
-            next_position[0] -= 1
+            next_position[0] += 1
         elif self.agent_direction == Direction.East:
             next_position[1] += 1
         elif self.agent_direction == Direction.South:
-            next_position[0] += 1
+            next_position[0] -= 1
         elif self.agent_direction == Direction.West:
             next_position[1] -= 1
 
@@ -168,8 +177,11 @@ class BitToBitGridWorld:
         gMakeVisible(self.window)
         return self.agent
 
+    """
+        draw the control menu (buttons)
+    """
     def add_control_menu(self):
-        backColor = gColorLightGray(self.window)
-        gdAddButton(self.window,'Step Forward',self.move_forward,70,275,backColor)
-        gdAddButton(self.window,'Turn CW',self.turn_clockwise,25,310,backColor)
+        back_color = gColorLightGray(self.window)
+        gdAddButton(self.window, 'Step Forward', self.move_forward, 70, 275, back_color)
+        gdAddButton(self.window, 'Turn CW', self.turn_clockwise, 70, 310, back_color)
 
