@@ -2,5 +2,5 @@ import numpy as np
 from utils import *
 import collections
 
-action = np.random.choice(1, 1)[0]
-print(action)
+i = 28
+print(np.floor((i-2)/2))
