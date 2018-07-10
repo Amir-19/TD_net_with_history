@@ -7,6 +7,8 @@ class Direction(Enum):
     South = 3
     West = 4
 
+    def __int__(self):
+        return self.value
 
 class Action(Enum):
     Forward = 0
