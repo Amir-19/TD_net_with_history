@@ -5,20 +5,20 @@ from td_net_with_history_utils import *
 import numpy as np
 
 
-def create_feature_vector(obs_history,action_history,predictions):
+def create_feature_vector(obs_history, action_history, predictions):
     x = []
 
     # adding the bias unit
     x.extend([1])
 
     # adding history of observations
-
+    x.extend(create_feature_vector_of_history(obs_history))
 
     # adding history of actions
-
+    x.extend(create_feature_vector_of_history(action_history))
 
     # adding the predictions from last time
-
+    x.extend(predictions)
 
     return x
 
@@ -30,7 +30,7 @@ def condition(action, n):
         base_condition = [1, 0]
 
     condition_vec = []
-    condition_vec.extend(base_condition for i in range(int(int(n)/2)))
+    condition_vec.extend(base_condition for _ in range(int(int(n)/2)))
     condition_vec = np.asarray(condition_vec).flatten()
     return condition_vec
 
@@ -51,6 +51,11 @@ def calculate_targets(observation, prev_predictions):
     return targets
 
 
+def calculate_predictions(W, x):
+    return np.dot(W,x)
+    # return sigmoid(np.dot(W,x))
+
+
 def main():
     # create the environment
     environment = BitToBitGridWorld(6, 6, [[3, 1], [3, 2], [4, 2], [3, 3], [2, 3],
@@ -63,6 +68,10 @@ def main():
     td_net_depth = 5
     time_step = 0
     n = 62 # since we have td net with 5 layers and 2 actions 2^6  -  2  =  62
+    m = 1 + (2 * (2**history_length)) + n # bias unit + 2 history (obs and action) + previous predictions
+    # 1. W_{t}
+    W = np.full((n, m),0)
+    # 2. y_{t}
     y = np.ones(n)*0.5
 
     # setting up the history
@@ -72,7 +81,9 @@ def main():
     last_observation = None
     last_action = None
 
-    for i in range(10):
+    # now we take as many actions to see a full history to create the state
+    # after having all the elements of both history queues not None we can start updating
+    for i in range(history_length):
         action = np.random.choice(num_actions, 1)[0]
         if action == 0:
             environment.move_forward()
@@ -87,7 +98,10 @@ def main():
             observation_history.appendleft(last_observation)
             action_history.appendleft(last_action)
 
-    print(observation_history,action_history,environment.agent_direction,environment.agent_position)
+    # after the for statement we have a_{t} which is stored in last action
+    # 3. a_{t}
+    a = last_action
+
     save_to_file(y,action_history,observation_history,environment.agent_direction,environment.agent_position)
 
 
