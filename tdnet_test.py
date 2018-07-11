@@ -71,8 +71,8 @@ def main():
     time_step = 0
     n = 62 # since we have td net with 5 layers and 2 actions 2^6  -  2  =  62
     m = 1 + (2 * (2**history_length)) + n # bias unit + 2 history (obs and action) + previous predictions
-    step_size = 0.1
-    max_step = 100000
+    step_size = 0.01
+    max_step = 5000000
     # 1. W_{t}
     W = np.full((n, m),0)
     # 2. y_{t}
@@ -146,7 +146,8 @@ def main():
 
         # next time step
         time_step += 1
-
+        if time_step % 1000 == 0:
+            print(time_step)
     save_to_file(y,action_history,observation_history,environment.agent_direction,environment.agent_position)
 
 
