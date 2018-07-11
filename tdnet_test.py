@@ -6,21 +6,23 @@ import numpy as np
 
 
 def create_feature_vector(obs_history, action_history, predictions):
+
     x = []
+    x = np.asarray(x)
 
     # adding the bias unit
-    x.extend([1])
+    x = np.append(x, [1])
 
     # adding history of observations
-    x.extend(create_feature_vector_of_history(obs_history))
+    x = np.append(x, create_feature_vector_of_history(obs_history))
 
     # adding history of actions
-    x.extend(create_feature_vector_of_history(action_history))
+    x = np.append(x, create_feature_vector_of_history(action_history))
 
     # adding the predictions from last time
-    x.extend(predictions)
+    x = np.append(x, predictions)
 
-    return x
+    return x.reshape(len(x),1)
 
 
 def condition(action, n):
@@ -31,7 +33,7 @@ def condition(action, n):
 
     condition_vec = []
     condition_vec.extend(base_condition for _ in range(int(int(n)/2)))
-    condition_vec = np.asarray(condition_vec).flatten()
+    condition_vec = np.asarray(condition_vec).flatten().reshape(n,1)
     return condition_vec
 
 
@@ -48,7 +50,7 @@ def calculate_targets(observation, prev_predictions):
         targets[2*(i+1)] = prev_predictions[i]
         targets[2*(i+1)+1] = prev_predictions[i]
 
-    return targets
+    return targets.reshape(len(targets),1)
 
 
 def calculate_predictions(W, x):
@@ -69,10 +71,12 @@ def main():
     time_step = 0
     n = 62 # since we have td net with 5 layers and 2 actions 2^6  -  2  =  62
     m = 1 + (2 * (2**history_length)) + n # bias unit + 2 history (obs and action) + previous predictions
+    step_size = 0.1
+    max_step = 100000
     # 1. W_{t}
     W = np.full((n, m),0)
     # 2. y_{t}
-    y = np.ones(n)*0.5
+    y = np.ones((n,1))*0.5
 
     # setting up the history
     observation_history = collections.deque(history_length*[None], history_length)
@@ -97,10 +101,51 @@ def main():
             last_action = action
             observation_history.appendleft(last_observation)
             action_history.appendleft(last_action)
+        time_step += 1
 
-    # after the for statement we have a_{t} which is stored in last action
-    # 3. a_{t}
-    a = last_action
+    for i in range(max_step - history_length):
+
+        # 3. a_{t}
+        a = action_history[0]
+
+        # 4. x_{t}
+        x = create_feature_vector(observation_history,action_history,y)
+
+        # 5. y_{t} = σ(W_{t}x_{t})
+        y = calculate_predictions(W,x)
+
+        action = np.random.choice(num_actions, 1)[0]
+        if action == 0:
+            environment.move_forward()
+            last_observation = environment.get_observation()
+            last_action = action
+            observation_history.appendleft(last_observation)
+            action_history.appendleft(last_action)
+        elif action == 1:
+            environment.turn_clockwise()
+            last_observation = environment.get_observation()
+            last_action = action
+            observation_history.appendleft(last_observation)
+            action_history.appendleft(last_action)
+        a = action
+        # 6. c_{t}
+        c = condition(a,n)
+
+        # 7. x_{t+1}
+        xtp1 = create_feature_vector(observation_history,action_history,y)
+
+        # 8. ỹ_{t+1} =
+        ỹ = calculate_predictions(W,xtp1)
+
+        # 9. z_{t}
+        z = calculate_targets(last_observation,ỹ)
+
+        # 10. update weights W
+        update = step_size*(np.outer(np.multiply(z-y,c).T,x))
+        W = W + update
+
+        # next time step
+        time_step += 1
 
     save_to_file(y,action_history,observation_history,environment.agent_direction,environment.agent_position)
 

@@ -6,10 +6,19 @@ from bit_to_bit_gridworld_env import *
 from td_net_with_history_utils import *
 
 
-y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader(history_length=6)
-m = 6
-n = 6
-obstacles = [[3, 1], [3, 2], [4, 2], [3, 3], [2, 3], [4, 5], [3, 5], [2, 5], [1, 5], [0, 5]]
-print(y)
-gui = BitToBitGridWorldGUI(m,n,obstacles,initial_position,initial_direction)
+# n = 3
+# m = 2
+# zy = [[1, 2, 3]]
+# zy = np.array(zy)
+# c = np.asarray([[1, 1, 1]])
+# x = np.asarray([[6,7]])
+# W = np.full((n, m),0)
+#
+# yyy = np.multiply(zy,c).T
+#
+# print(np.dot(yyy,x))
+# print(np.outer(yyy,x))
+# print(zy[0])
 
+x = np.zeros((1,5))
+print(x)

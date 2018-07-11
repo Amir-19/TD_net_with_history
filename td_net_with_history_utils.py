@@ -5,7 +5,7 @@ from bit_to_bit_gridworld_env import *
 def create_feature_vector_of_history(a):
 
     a_as_one_digit = 0
-    a_as_feature_vector = np.zeros(2**len(a))
+    a_as_feature_vector = np.zeros((2**len(a),1))
     for i in range(len(a)):
         a_as_one_digit += a[len(a)-1-i] * (2 ** i)
     a_as_feature_vector[a_as_one_digit] = 1
