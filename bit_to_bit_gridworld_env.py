@@ -10,6 +10,7 @@ class Direction(Enum):
     def __int__(self):
         return self.value
 
+
 class Action(Enum):
     Forward = 0
     Rotate = 1

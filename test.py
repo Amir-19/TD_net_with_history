@@ -20,5 +20,6 @@ from td_net_with_history_utils import *
 # print(np.outer(yyy,x))
 # print(zy[0])
 
-x = np.zeros((1,5))
-print(x)
+a = [1,2]
+observation_history = collections.deque(a, 2)
+print(observation_history)

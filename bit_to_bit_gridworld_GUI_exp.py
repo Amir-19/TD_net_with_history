@@ -1,12 +1,12 @@
 from bit_to_bit_gridworld_env import *
 from g import *
 from td_net_with_history_utils import *
-
+import collections
 
 
 class BitToBitGridWorldGUI():
 
-    def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction):
+    def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction, _w, _y, _history_observation, _history_action, _history_length):
 
         # environment attributes
         self.m = _m
@@ -17,6 +17,14 @@ class BitToBitGridWorldGUI():
         self.agent_position = _agent_position
         self.agent_direction = _agent_direction
         self.environment = BitToBitGridWorld(self.m, self.n, self.obstacles, self.agent_position, self.agent_direction)
+
+        # interactive problem controller
+        self.W = _w
+        self.history_length = _history_length
+        self.observation_history = collections.deque(_history_observation, self.history_length)
+        self.action_history = collections.deque(_history_action, self.history_length)
+        self.history_length = _history_length
+        self.y = _y.reshape(len(_y), 1)
 
         # graphics stuff
         self.xsize = _n+2
@@ -74,12 +82,43 @@ class BitToBitGridWorldGUI():
     def move_agent_forward_gui(self):
         self.environment.move_forward()
         self.draw_agent()
+        self.action_history.appendleft(0)
+        self.observation_history.appendleft(self.environment.get_observation())
+        self.y = self.update_predictions()
+        self.print_predictions()
 
     def rotate_agent_gui(self):
         self.environment.turn_clockwise()
         self.draw_agent()
+        self.action_history.appendleft(1)
+        self.observation_history.appendleft(self.environment.get_observation())
+        self.y = self.update_predictions()
+        self.print_predictions()
 
+    def update_predictions(self):
+        return np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y))
 
+    def create_feature_vector(self, obs_history, action_history, predictions):
+
+        x = []
+        x = np.asarray(x)
+
+        # adding the bias unit
+        x = np.append(x, [1])
+
+        # adding history of observations
+        x = np.append(x, create_feature_vector_of_history(obs_history))
+
+        # adding history of actions
+        x = np.append(x, create_feature_vector_of_history(action_history))
+
+        # adding the predictions from last time
+        x = np.append(x, predictions)
+
+        return x.reshape(len(x), 1)
+
+    def print_predictions(self):
+        np.savetxt('interactive_y.txt', self.y, fmt='%f')
     """
         draw the control menu (buttons)
     """
@@ -91,11 +130,13 @@ class BitToBitGridWorldGUI():
 def main():
 
     # gui creation
-    y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader(history_length=6)
+    history_length = 6
+    W,y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader(history_length=6)
     m = 6
     n = 6
     obstacles = [[3, 1], [3, 2], [4, 2], [3, 3], [2, 3], [4, 5], [3, 5], [2, 5], [1, 5], [0, 5]]
-    gui = BitToBitGridWorldGUI(m,n,obstacles,initial_position,initial_direction)
+    gui = BitToBitGridWorldGUI(m, n, obstacles, initial_position, initial_direction, W, y, history_observation, history_action, history_length)
+
 
 
 if __name__ == "__main__":

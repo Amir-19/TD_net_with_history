@@ -17,6 +17,7 @@ def experiment_file_reader(history_length=6):
 
     y = np.asarray(np.loadtxt('predictions_y.txt', dtype=float))
     c = np.asarray(np.loadtxt('extra_state_setting.txt', dtype=int))
+    w = np.asarray(np.loadtxt('weights_w.txt', dtype=float))
     history_observation = []
     history_action = []
     for i in range(history_length):
@@ -26,11 +27,12 @@ def experiment_file_reader(history_length=6):
     initial_position = [c[12], c[13]]
     initial_direction = Direction(c[14])
 
-    return y, history_observation, history_action, initial_position, initial_direction
+    return w,y, history_observation, history_action, initial_position, initial_direction
 
 
-def save_to_file(predictions, history_action, history_observation, agent_direction, agent_position):
+def save_to_file(weights, predictions, history_action, history_observation, agent_direction, agent_position):
 
+    np.savetxt('weights_w.txt', weights, fmt='%f')
     np.savetxt('predictions_y.txt', predictions, fmt='%f')
     extra_setting = []
     extra_setting.extend(history_observation)
