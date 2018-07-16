@@ -2,7 +2,7 @@ from bit_to_bit_gridworld_env import *
 from g import *
 from td_net_with_history_utils import *
 import collections
-
+from utils import *
 
 class BitToBitGridWorldGUI():
 
@@ -96,8 +96,11 @@ class BitToBitGridWorldGUI():
         self.print_predictions()
 
     def update_predictions(self):
-        return np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y))
-        # return np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y))
+        # identity
+        #return np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y))
+
+        # sigmoid
+        return sigmoid(np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y)))
     def create_feature_vector(self, obs_history, action_history, predictions):
 
         x = []
