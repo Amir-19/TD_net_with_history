@@ -54,8 +54,8 @@ def calculate_targets(observation, prev_predictions):
 
 
 def calculate_predictions(W, x):
-    return np.dot(W,x)
-    # return sigmoid(np.dot(W,x))
+    # return np.dot(W,x)
+    return sigmoid(np.dot(W,x))
 
 
 def main():
@@ -141,7 +141,16 @@ def main():
         z = calculate_targets(last_observation,ỹ)
 
         # 10. update weights W
-        update = step_size*(np.outer(np.multiply(z-y,c).T,x))
+
+        # identity
+        # update = step_size*(np.outer(np.multiply(z-y,c).T,x))
+
+        # sigmoid
+        part1 = np.multiply(z-y,c)
+        part2 = np.multiply(part1,y)
+        part3 = np.multiply(part2,1-y)
+        update = step_size*(np.outer(part3.T,x))
+
         W = W + update
 
         # next time step

@@ -97,7 +97,7 @@ class BitToBitGridWorldGUI():
 
     def update_predictions(self):
         return np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y))
-
+        # return np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y))
     def create_feature_vector(self, obs_history, action_history, predictions):
 
         x = []
