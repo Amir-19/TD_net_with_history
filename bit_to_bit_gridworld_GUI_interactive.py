@@ -1,6 +1,5 @@
 from bit_to_bit_gridworld_env import *
 from g import *
-from td_net_with_history_utils import *
 import collections
 from utils import *
 
@@ -32,11 +31,39 @@ class BitToBitGridWorldGUI():
         self.blocksize = 30
         self.window = Gwindow(gdViewport = (20, 25, 800, 600))
         self.draw_gridworld()
+        self.draw_predictions()
         self.agent = None
         self.agent = self.draw_agent()
         self.add_control_menu()
         gMakeVisible(self.window)
         gMainLoop()
+
+    """
+        draw the gridworld
+    """
+    def draw_predictions(self):
+        bgcolor = gColorRGB255(True, 213, 183, 145)
+
+        # background
+        gdFillRectR(self.window, 400,30, self.xsize*self.blocksize-1,self.ysize*self.blocksize,bgcolor)
+
+        # agent in the middle with correct direction
+        gDelete(self.window, self.agent_prediction)
+        self.agent_direction = self.environment.agent_direction
+        if self.agent_direction == Direction.East:
+            self.agent_prediction = gdDrawWedge(self.window, ((self.agent_position[1]+2)*self.blocksize)-(self.blocksize/5),
+                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, 160, 40,'red')
+        elif self.agent_direction == Direction.South:
+            self.agent_prediction = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
+                                  ((self.m-self.agent_position[0]+1)*self.blocksize)-(self.blocksize/5), 20, 70, 40,'red')
+        elif self.agent_direction == Direction.West:
+            self.agent_prediction = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/5),
+                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, -20, 40,'red')
+        elif self.agent_direction == Direction.North:
+            self.agent_prediction = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
+                                  ((self.m - self.agent_position[0])*self.blocksize)+(self.blocksize/5), 20, 250, 40,'red')
+
+        gdFillRectR(self.window,400, 30,3,self.blocksize,'black')
 
     """
         draw the gridworld
@@ -65,16 +92,16 @@ class BitToBitGridWorldGUI():
 
         if self.agent_direction == Direction.East:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+2)*self.blocksize)-(self.blocksize/5),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, 160, 40)
+                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, 160, 40,'red')
         elif self.agent_direction == Direction.South:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
-                                  ((self.m-self.agent_position[0]+1)*self.blocksize)-(self.blocksize/5), 20, 70, 40)
+                                  ((self.m-self.agent_position[0]+1)*self.blocksize)-(self.blocksize/5), 20, 70, 40,'red')
         elif self.agent_direction == Direction.West:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/5),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, -20, 40)
+                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, -20, 40,'red')
         elif self.agent_direction == Direction.North:
             self.agent = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
-                                  ((self.m - self.agent_position[0])*self.blocksize)+(self.blocksize/5), 20, 250, 40)
+                                  ((self.m - self.agent_position[0])*self.blocksize)+(self.blocksize/5), 20, 250, 40,'red')
 
         gMakeVisible(self.window)
         return self.agent
