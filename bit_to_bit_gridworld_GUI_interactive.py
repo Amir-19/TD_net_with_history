@@ -25,16 +25,30 @@ class BitToBitGridWorldGUI():
         self.history_length = _history_length
         self.y = _y.reshape(len(_y), 1)
 
+        # prediction graphic stuff
+        self.agent_prediction_direction = None
+        self.obs_pred = None
+        self.indicator = ["" for x in range(len(_y))]
+        self.indicator[0] = "F"
+        self.indicator[1] = "R"
+
+        for i in range(int((len(_y)-2)/2)):
+            self.indicator[2*(i+1)] = self.indicator[i]+"F"
+            self.indicator[2*(i+1)+1] = self.indicator[i]+"R"
+        self.graphical_indicator_prediction = [None for x in range(len(_y))]
+
         # graphics stuff
         self.xsize = _n+2
         self.ysize = _m+2
         self.blocksize = 30
         self.window = Gwindow(gdViewport = (20, 25, 800, 600))
         self.draw_gridworld()
+        self.agent_prediction = None
         self.draw_predictions()
         self.agent = None
         self.agent = self.draw_agent()
         self.add_control_menu()
+
         gMakeVisible(self.window)
         gMainLoop()
 
@@ -45,25 +59,117 @@ class BitToBitGridWorldGUI():
         bgcolor = gColorRGB255(True, 213, 183, 145)
 
         # background
-        gdFillRectR(self.window, 400,30, self.xsize*self.blocksize-1,self.ysize*self.blocksize,bgcolor)
+        gdFillRectR(self.window, 303,33, 13*self.blocksize,13*self.blocksize,bgcolor)
 
         # agent in the middle with correct direction
-        gDelete(self.window, self.agent_prediction)
-        self.agent_direction = self.environment.agent_direction
-        if self.agent_direction == Direction.East:
-            self.agent_prediction = gdDrawWedge(self.window, ((self.agent_position[1]+2)*self.blocksize)-(self.blocksize/5),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, 160, 40,'red')
-        elif self.agent_direction == Direction.South:
-            self.agent_prediction = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
-                                  ((self.m-self.agent_position[0]+1)*self.blocksize)-(self.blocksize/5), 20, 70, 40,'red')
-        elif self.agent_direction == Direction.West:
-            self.agent_prediction = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/5),
-                                  ((self.m-self.agent_position[0])*self.blocksize)+(self.blocksize/2), 20, -20, 40,'red')
-        elif self.agent_direction == Direction.North:
-            self.agent_prediction = gdDrawWedge(self.window, ((self.agent_position[1]+1)*self.blocksize)+(self.blocksize/2),
-                                  ((self.m - self.agent_position[0])*self.blocksize)+(self.blocksize/5), 20, 250, 40,'red')
+        offset_x = 5
+        offset_y = 6
+        pred_dir_x = 1
+        pred_dir_y = 1
+        x_y_inverse = False
+        if self.agent_prediction is not None:
+            gDelete(self.window, self.agent_prediction)
+        self.agent_prediction_direction = self.environment.agent_direction
+        if self.agent_prediction_direction == Direction.East:
+            self.agent_prediction = gdDrawWedge(self.window, 300+((offset_x+2)*self.blocksize)-(self.blocksize/5),
+                                  30+((offset_y)*self.blocksize)+(self.blocksize/2), 20, 160, 40,'red')
+            pred_dir_x = 1
+            pred_dir_y = 1
+            x_y_inverse = False
+        elif self.agent_prediction_direction == Direction.South:
+            self.agent_prediction = gdDrawWedge(self.window, 300+((offset_x+1)*self.blocksize)+(self.blocksize/2),
+                                  30+((offset_y+1)*self.blocksize)-(self.blocksize/5), 20, 70, 40,'red')
+            pred_dir_x = 0
+            pred_dir_y = 1
+            x_y_inverse = True
+        elif self.agent_prediction_direction == Direction.West:
+            self.agent_prediction = gdDrawWedge(self.window, 300+((offset_x+1)*self.blocksize)+(self.blocksize/5),
+                                  30+((offset_y)*self.blocksize)+(self.blocksize/2), 20, -20, 40,'red')
+            pred_dir_x = 0
+            pred_dir_y = 0
+            x_y_inverse = False
+        elif self.agent_prediction_direction == Direction.North:
+            self.agent_prediction = gdDrawWedge(self.window, 300+((offset_x+1)*self.blocksize)+(self.blocksize/2),
+                                  30+((offset_y)*self.blocksize)+(self.blocksize/5), 20, 250, 40,'red')
+            pred_dir_x = 1
+            pred_dir_y = 0
+            x_y_inverse = True
 
-        gdFillRectR(self.window,400, 30,3,self.blocksize,'black')
+        # draw the predictions
+
+        pred_x = 6
+        pred_y = 6
+        if self.obs_pred is not None:
+            gDelete(self.window, self.obs_pred)
+        if x_y_inverse:
+            # horizantal
+            self.obs_pred = gdFillRectR(self.window,300+((pred_x)*self.blocksize), 30+((pred_y+pred_dir_y)*self.blocksize),self.blocksize,3,'black')
+        else:
+            # vertical
+            self.obs_pred = gdFillRectR(self.window,300+((pred_x+pred_dir_x)*self.blocksize), 30+((pred_y)*self.blocksize),3,self.blocksize,'black')
+
+        for i in range(len(self.indicator)):
+            a,b,c,d,e = self.get_the_gridcell_for_prediction(self.indicator[i])
+            if self.graphical_indicator_prediction[i] is not None:
+                gDelete(self.window, self.graphical_indicator_prediction[i])
+            if e:
+                # horizantal
+                self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c)*self.blocksize), 30+((d+b)*self.blocksize),self.blocksize,3,'black')
+            else:
+                # vertical
+                self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c+a)*self.blocksize), 30+((d)*self.blocksize),3,self.blocksize,'black')
+
+
+    def get_the_gridcell_for_prediction(self,indi):
+        pred_x = 6
+        pred_y = 6
+        if self.agent_prediction_direction == Direction.East:
+            add_x = 1
+            add_y = 0
+            x_y_inverse = False
+        elif self.agent_prediction_direction == Direction.South:
+            add_x = 0
+            add_y = 1
+            x_y_inverse = True
+        elif self.agent_prediction_direction == Direction.West:
+            add_x = -1
+            add_y = 0
+            x_y_inverse = False
+        elif self.agent_prediction_direction == Direction.North:
+            add_x = 0
+            add_y = -1
+            x_y_inverse = True
+        for i in indi:
+            if i == "F":
+                pred_x += add_x
+                pred_y += add_y
+            elif i == "R":
+                if add_x == 1 and add_y == 0:
+                    add_x = 0
+                    add_y = 1
+                    x_y_inverse = True
+                elif add_x == 0 and add_y == 1:
+                    add_x = -1
+                    add_y = 0
+                    x_y_inverse = True
+                elif add_x == -1 and add_y == 0:
+                    add_x = 0
+                    add_y = -1
+                    x_y_inverse = True
+                elif add_x == 0 and add_y == -1:
+                    add_x = 1
+                    add_y = 0
+                    x_y_inverse = True
+
+        if add_x == 1 and add_y == 0:
+            return add_x,add_y, pred_x, pred_y, x_y_inverse
+        elif add_x == 0 and add_y == 1:
+            return add_x,add_y, pred_x, pred_y, x_y_inverse
+        elif add_x == -1 and add_y == 0:
+            return add_x,add_y, pred_x, pred_y, x_y_inverse
+        elif add_x == 0 and add_y == -1:
+            return add_x,add_y, pred_x, pred_y, x_y_inverse
+
 
     """
         draw the gridworld
@@ -112,7 +218,7 @@ class BitToBitGridWorldGUI():
         self.action_history.appendleft(0)
         self.observation_history.appendleft(self.environment.get_observation())
         self.y = self.update_predictions()
-        self.print_predictions()
+        self.draw_predictions()
 
     def rotate_agent_gui(self):
         self.environment.turn_clockwise()
@@ -120,7 +226,7 @@ class BitToBitGridWorldGUI():
         self.action_history.appendleft(1)
         self.observation_history.appendleft(self.environment.get_observation())
         self.y = self.update_predictions()
-        self.print_predictions()
+        self.draw_predictions()
 
     def update_predictions(self):
         # identity
