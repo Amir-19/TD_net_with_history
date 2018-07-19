@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3ba0435c-a3d5-4092-89d4-51c235963b8f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bit_to_bit_gridworld_GUI_interactive.py" afterPath="$PROJECT_DIR$/bit_to_bit_gridworld_GUI_interactive.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interactive_y.txt" afterPath="$PROJECT_DIR$/interactive_y.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
     </list>
     <ignored path="TD_net_with_history.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -20,7 +18,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/TD_net_with_history$one_bit_gridworld.coverage" NAME="one_bit_gridworld Coverage Results" MODIFIED="1530641494348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TD_net_with_history$td_net_with_history_utils.coverage" NAME="td_net_with_history_utils Coverage Results" MODIFIED="1531342114438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/TD_net_with_history$bit_to_bit_gridworld_GUI_exp.coverage" NAME="bit_to_bit_gridworld_GUI_exp Coverage Results" MODIFIED="1531957681387" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TD_net_with_history$bit_to_bit_gridworld_GUI_exp.coverage" NAME="bit_to_bit_gridworld_GUI_exp Coverage Results" MODIFIED="1531959931290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TD_net_with_history$bit_to_bit_gridworld_exp.coverage" NAME="bit_to_bit_gridworld_exp Coverage Results" MODIFIED="1531927992524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TD_net_with_history$test.coverage" NAME="test Coverage Results" MODIFIED="1531952372940" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TD_net_with_history$tdnet_test.coverage" NAME="tdnet_test Coverage Results" MODIFIED="1531760869882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -68,11 +66,11 @@
                   </provider>
                 </entry>
               </file>
-              <file leaf-file-name="bit_to_bit_gridworld_GUI_interactive.py" pinned="false" current-in-tab="true">
+              <file leaf-file-name="bit_to_bit_gridworld_GUI_interactive.py" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_GUI_interactive.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="2.4678285">
-                      <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
+                    <state vertical-scroll-proportion="0.0">
+                      <caret line="116" column="80" selection-start-line="116" selection-start-column="80" selection-end-line="116" selection-end-column="80" />
                       <folding>
                         <element signature="e#0#38#0" expanded="true" />
                       </folding>
@@ -80,10 +78,10 @@
                   </provider>
                 </entry>
               </file>
-              <file leaf-file-name="bit_to_bit_gridworld_exp.py" pinned="false" current-in-tab="false">
+              <file leaf-file-name="bit_to_bit_gridworld_exp.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_exp.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
+                    <state vertical-scroll-proportion="-0.14075068">
                       <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
                       <folding>
                         <element signature="e#0#38#0" expanded="true" />
@@ -1059,16 +1057,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_exp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1079,8 +1067,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_GUI_interactive.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.4678285">
-          <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="80" selection-start-line="116" selection-start-column="80" selection-end-line="116" selection-end-column="80" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_exp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.14075068">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
