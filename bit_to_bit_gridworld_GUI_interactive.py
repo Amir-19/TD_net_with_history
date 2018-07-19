@@ -53,7 +53,7 @@ class BitToBitGridWorldGUI():
         gMainLoop()
 
     """
-        draw the gridworld
+        draw the prediction GUI
     """
     def draw_predictions(self):
         bgcolor = gColorRGB255(True, 213, 183, 145)
@@ -95,7 +95,7 @@ class BitToBitGridWorldGUI():
             pred_dir_y = 0
             x_y_inverse = True
 
-        # draw the predictions
+        # draw the predictions and observation in the prediction GUI
 
         pred_x = 6
         pred_y = 6
@@ -128,6 +128,9 @@ class BitToBitGridWorldGUI():
                     # north
                     self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c)*self.blocksize), 30+((d+b+1)*self.blocksize),self.blocksize,3,pred_color)
 
+    """
+        get the position of a specific prediction, y_{i}, at the prediction GUI
+    """
     def get_the_gridcell_for_prediction(self,indi):
         pred_x = 6
         pred_y = 6
@@ -219,49 +222,28 @@ class BitToBitGridWorldGUI():
         gMakeVisible(self.window)
         return self.agent
 
+    """
+        move the agent forward in the GUI and update the predictions
+    """
     def move_agent_forward_gui(self):
         self.environment.move_forward()
         self.draw_agent()
         self.action_history.appendleft(0)
         self.observation_history.appendleft(self.environment.get_observation())
-        self.y = self.update_predictions()
+        self.y = calculate_predictions(self.W, create_feature_vector(self.observation_history, self.action_history, self.y))
         self.draw_predictions()
 
+    """
+        rotate the agent in the GUI and update the predictions
+    """
     def rotate_agent_gui(self):
         self.environment.turn_clockwise()
         self.draw_agent()
         self.action_history.appendleft(1)
         self.observation_history.appendleft(self.environment.get_observation())
-        self.y = self.update_predictions()
+        self.y = calculate_predictions(self.W, create_feature_vector(self.observation_history, self.action_history, self.y))
         self.draw_predictions()
 
-    def update_predictions(self):
-        # identity
-        #return np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y))
-
-        # sigmoid
-        return sigmoid(np.dot(self.W, self.create_feature_vector(self.observation_history, self.action_history, self.y)))
-    def create_feature_vector(self, obs_history, action_history, predictions):
-
-        x = []
-        x = np.asarray(x)
-
-        # adding the bias unit
-        x = np.append(x, [1])
-
-        # adding history of observations
-        x = np.append(x, create_feature_vector_of_history(obs_history))
-
-        # adding history of actions
-        x = np.append(x, create_feature_vector_of_history(action_history))
-
-        # adding the predictions from last time
-        x = np.append(x, predictions)
-
-        return x.reshape(len(x), 1)
-
-    def print_predictions(self):
-        np.savetxt('interactive_y.txt', self.y, fmt='%f')
     """
         draw the control menu (buttons)
     """

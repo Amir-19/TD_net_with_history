@@ -2,60 +2,7 @@ from bit_to_bit_gridworld_env import *
 from utils import *
 import collections
 import numpy as np
-
-
-def create_feature_vector(obs_history, action_history, predictions):
-
-    x = []
-    x = np.asarray(x)
-
-    # adding the bias unit
-    x = np.append(x, [1])
-
-    # adding history of observations
-    x = np.append(x, create_feature_vector_of_history(obs_history))
-
-    # adding history of actions
-    x = np.append(x, create_feature_vector_of_history(action_history))
-
-    # adding the predictions from last time
-    x = np.append(x, predictions)
-
-    return x.reshape(len(x),1)
-
-
-def condition(action, n):
-    if action == 1:
-        base_condition = [0, 1]
-    elif action == 0:
-        base_condition = [1, 0]
-
-    condition_vec = []
-    condition_vec.extend(base_condition for _ in range(int(int(n)/2)))
-    condition_vec = np.asarray(condition_vec).flatten().reshape(n,1)
-    return condition_vec
-
-
-def calculate_targets(observation, prev_predictions):
-
-    targets = np.zeros(len(prev_predictions))
-
-    # the first two node are connected to the observation, so the target for those two is the observation
-    targets[0] = observation
-    targets[1] = observation
-
-    # each node i is connected to nodes 2i and 2i + 1
-    for i in range(int((len(prev_predictions)-2)/2)):
-        targets[2*(i+1)] = prev_predictions[i]
-        targets[2*(i+1)+1] = prev_predictions[i]
-
-    return targets.reshape(len(targets),1)
-
-
-def calculate_predictions(W, x):
-    # return np.dot(W,x)
-    return sigmoid(np.dot(W,x))
-
+from settings import *
 
 def main():
     # create the environment
@@ -65,12 +12,11 @@ def main():
 
     # the td net with history attributes
     history_length = 6
-    td_net_depth = 5
     time_step = 0
     n = 62 # since we have td net with 5 layers and 2 actions 2^6  -  2  =  62
     m = 1 + (2 * (2**history_length)) + n # bias unit + 2 history (obs and action) + previous predictions
-    step_size = 0.01
-    max_step = 50000000
+    step_size = Settings.step_size
+    max_step = Settings.training_steps
 
     # 1. W_{t}
     W = np.full((n, m),0)
@@ -140,15 +86,13 @@ def main():
         z = calculate_targets(last_observation,ỹ)
 
         # 10. update weights W
-
-        # identity
-        # update = step_size*(np.outer(np.multiply(z-y,c).T,x))
-
-        # sigmoid
-        part1 = np.multiply(z-y,c)
-        part2 = np.multiply(part1,y)
-        part3 = np.multiply(part2,1-y)
-        update = step_size*(np.outer(part3.T,x))
+        if Settings.activation_function == "identity":
+            update = step_size*(np.outer(np.multiply(z-y,c).T,x))
+        elif Settings.activation_function == "sigmoid":
+            part1 = np.multiply(z-y,c)
+            part2 = np.multiply(part1,y)
+            part3 = np.multiply(part2,1-y)
+            update = step_size*(np.outer(part3.T,x))
 
         W = W + update
 

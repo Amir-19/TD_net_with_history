@@ -1,5 +1,6 @@
 import numpy as np
 from bit_to_bit_gridworld_env import *
+from settings import *
 
 def sigmoid(x):
     try:
@@ -7,6 +8,62 @@ def sigmoid(x):
     except OverflowError:
         res = 0.0
     return res
+
+
+def condition(action, n):
+    if action == 1:
+        base_condition = [0, 1]
+    elif action == 0:
+        base_condition = [1, 0]
+
+    condition_vec = []
+    condition_vec.extend(base_condition for _ in range(int(int(n)/2)))
+    condition_vec = np.asarray(condition_vec).flatten().reshape(n,1)
+    return condition_vec
+
+
+def calculate_targets(observation, prev_predictions):
+
+    targets = np.zeros(len(prev_predictions))
+
+    # the first two node are connected to the observation, so the target for those two is the observation
+    targets[0] = observation
+    targets[1] = observation
+
+    # each node i is connected to nodes 2i and 2i + 1
+    for i in range(int((len(prev_predictions)-2)/2)):
+        targets[2*(i+1)] = prev_predictions[i]
+        targets[2*(i+1)+1] = prev_predictions[i]
+
+    return targets.reshape(len(targets),1)
+
+
+def calculate_predictions(W, x):
+
+    if Settings.activation_function == "sigmoid":
+        return sigmoid(np.dot(W, x))
+    elif Settings.activation_function == "identity":
+        return np.dot(W, x)
+
+
+def create_feature_vector(obs_history, action_history, predictions):
+
+    x = []
+    x = np.asarray(x)
+
+    # adding the bias unit
+    x = np.append(x, [1])
+
+    # adding history of observations
+    x = np.append(x, create_feature_vector_of_history(obs_history))
+
+    # adding history of actions
+    x = np.append(x, create_feature_vector_of_history(action_history))
+
+    # adding the predictions from last time
+    x = np.append(x, predictions)
+
+    return x.reshape(len(x),1)
 
 
 def create_feature_vector_of_history(a):
