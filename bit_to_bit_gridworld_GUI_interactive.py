@@ -107,27 +107,27 @@ class BitToBitGridWorldGUI():
         else:
             # vertical
             self.obs_pred = gdFillRectR(self.window,300+((pred_x+pred_dir_x)*self.blocksize), 30+((pred_y)*self.blocksize),3,self.blocksize,'black')
-
-        self.tester_list[7] = 1
-        self.tester_list[3] = 1
+        print(self.y[29])
         for i in range(len(self.indicator)):
             if self.tester_list[i] == 1:
+                prediction_value = min(self.y[i][0],1)
+                prediction_value = max(0,prediction_value)
+                pred_color = gColorBW(True,prediction_value)
                 a,b,c,d,e = self.get_the_gridcell_for_prediction(self.indicator[i])
                 if self.graphical_indicator_prediction[i] is not None:
                     gDelete(self.window, self.graphical_indicator_prediction[i])
                 if a == 1 and b == 0:
                     # east
-                    self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c+a)*self.blocksize), 30+((d)*self.blocksize),3,self.blocksize,'black')
+                    self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c+a)*self.blocksize), 30+((d)*self.blocksize),3,self.blocksize,pred_color)
                 elif a == 0 and b == 1:
                     # south
-                    self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c)*self.blocksize), 30+((d+b)*self.blocksize),self.blocksize,3,'black')
+                    self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c)*self.blocksize), 30+((d+b)*self.blocksize),self.blocksize,3,pred_color)
                 elif a == -1 and b == 0:
                     # west
-                    self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c+a+1)*self.blocksize), 30+((d)*self.blocksize),3,self.blocksize,'black')
+                    self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c+a+1)*self.blocksize), 30+((d)*self.blocksize),3,self.blocksize,pred_color)
                 elif a == 0 and b == -1:
                     # north
-                    self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c)*self.blocksize), 30+((d+b+1)*self.blocksize),self.blocksize,3,'black')
-
+                    self.graphical_indicator_prediction[i] = gdFillRectR(self.window,300+((c)*self.blocksize), 30+((d+b+1)*self.blocksize),self.blocksize,3,pred_color)
 
     def get_the_gridcell_for_prediction(self,indi):
         pred_x = 6
@@ -178,7 +178,6 @@ class BitToBitGridWorldGUI():
             return add_x,add_y, pred_x, pred_y, x_y_inverse
         elif add_x == 0 and add_y == -1:
             return add_x,add_y, pred_x, pred_y, x_y_inverse
-
 
     """
         draw the gridworld

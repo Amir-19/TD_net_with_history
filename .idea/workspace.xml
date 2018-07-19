@@ -18,7 +18,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/TD_net_with_history$one_bit_gridworld.coverage" NAME="one_bit_gridworld Coverage Results" MODIFIED="1530641494348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TD_net_with_history$td_net_with_history_utils.coverage" NAME="td_net_with_history_utils Coverage Results" MODIFIED="1531342114438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/TD_net_with_history$bit_to_bit_gridworld_GUI_exp.coverage" NAME="bit_to_bit_gridworld_GUI_exp Coverage Results" MODIFIED="1531959931290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/TD_net_with_history$bit_to_bit_gridworld_GUI_exp.coverage" NAME="bit_to_bit_gridworld_GUI_exp Coverage Results" MODIFIED="1531972885435" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TD_net_with_history$bit_to_bit_gridworld_exp.coverage" NAME="bit_to_bit_gridworld_exp Coverage Results" MODIFIED="1531927992524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TD_net_with_history$test.coverage" NAME="test Coverage Results" MODIFIED="1531952372940" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TD_net_with_history$tdnet_test.coverage" NAME="tdnet_test Coverage Results" MODIFIED="1531760869882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -59,18 +59,18 @@
               <file leaf-file-name="g.py" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/g.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="-5.5185184">
-                      <caret line="868" column="116" selection-start-line="868" selection-start-column="105" selection-end-line="868" selection-end-column="116" />
+                    <state vertical-scroll-proportion="-8.851851">
+                      <caret line="724" column="16" selection-start-line="724" selection-start-column="4" selection-end-line="724" selection-end-column="16" />
                       <folding />
                     </state>
                   </provider>
                 </entry>
               </file>
-              <file leaf-file-name="bit_to_bit_gridworld_GUI_interactive.py" pinned="false" current-in-tab="false">
+              <file leaf-file-name="bit_to_bit_gridworld_GUI_interactive.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_GUI_interactive.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
-                      <caret line="116" column="80" selection-start-line="116" selection-start-column="80" selection-end-line="116" selection-end-column="80" />
+                    <state vertical-scroll-proportion="0.35656837">
+                      <caret line="109" column="23" selection-start-line="109" selection-start-column="23" selection-end-line="109" selection-end-column="23" />
                       <folding>
                         <element signature="e#0#38#0" expanded="true" />
                       </folding>
@@ -78,10 +78,10 @@
                   </provider>
                 </entry>
               </file>
-              <file leaf-file-name="bit_to_bit_gridworld_exp.py" pinned="false" current-in-tab="true">
+              <file leaf-file-name="bit_to_bit_gridworld_exp.py" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_exp.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="-0.14075068">
+                    <state vertical-scroll-proportion="0.0">
                       <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
                       <folding>
                         <element signature="e#0#38#0" expanded="true" />
@@ -155,8 +155,8 @@
           <file leaf-file-name="interactive_y.txt" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/interactive_y.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.48257372">
-                  <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+                <state vertical-scroll-proportion="0.24128686">
+                  <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
                   <folding />
                 </state>
               </provider>
@@ -999,14 +999,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interactive_y.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48257372">
-          <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/predictions_y.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1033,18 +1025,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/g.py">
+    <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5185184">
-          <caret line="868" column="116" selection-start-line="868" selection-start-column="105" selection-end-line="868" selection-end-column="116" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="11" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_env.py">
+    <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_exp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interactive_y.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24128686">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/g.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.851851">
+          <caret line="724" column="16" selection-start-line="724" selection-start-column="4" selection-end-line="724" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -1057,28 +1067,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
+    <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_env.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="11" selection-end-column="34" />
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_GUI_interactive.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="80" selection-start-line="116" selection-start-column="80" selection-end-line="116" selection-end-column="80" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bit_to_bit_gridworld_exp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.14075068">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.35656837">
+          <caret line="109" column="23" selection-start-line="109" selection-start-column="23" selection-end-line="109" selection-end-column="23" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
