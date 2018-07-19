@@ -107,7 +107,6 @@ class BitToBitGridWorldGUI():
         else:
             # vertical
             self.obs_pred = gdFillRectR(self.window,300+((pred_x+pred_dir_x)*self.blocksize), 30+((pred_y)*self.blocksize),3,self.blocksize,'black')
-        print(self.y[29])
         for i in range(len(self.indicator)):
             if self.tester_list[i] == 1:
                 prediction_value = min(self.y[i][0],1)
