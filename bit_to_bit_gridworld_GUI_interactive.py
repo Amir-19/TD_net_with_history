@@ -1,7 +1,7 @@
-from bit_to_bit_gridworld_env import *
 from g import *
 import collections
 from utils import *
+
 
 class BitToBitGridWorldGUI():
 
@@ -256,12 +256,11 @@ def main():
 
     # gui creation
     history_length = 6
-    W,y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader(history_length=6)
+    W, y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader(history_length=6)
     m = 6
     n = 6
     obstacles = [[3, 1], [3, 2], [4, 2], [3, 3], [2, 3], [4, 5], [3, 5], [2, 5], [1, 5], [0, 5]]
     gui = BitToBitGridWorldGUI(m, n, obstacles, initial_position, initial_direction, W, y, history_observation, history_action, history_length)
-
 
 
 if __name__ == "__main__":

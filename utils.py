@@ -2,6 +2,7 @@ import numpy as np
 from bit_to_bit_gridworld_env import *
 from settings import *
 
+
 def sigmoid(x):
     try:
         res = 1 / (1 + np.exp(-x))
@@ -18,7 +19,7 @@ def condition(action, n):
 
     condition_vec = []
     condition_vec.extend(base_condition for _ in range(int(int(n)/2)))
-    condition_vec = np.asarray(condition_vec).flatten().reshape(n,1)
+    condition_vec = np.asarray(condition_vec).flatten().reshape(n, 1)
     return condition_vec
 
 
@@ -35,15 +36,15 @@ def calculate_targets(observation, prev_predictions):
         targets[2*(i+1)] = prev_predictions[i]
         targets[2*(i+1)+1] = prev_predictions[i]
 
-    return targets.reshape(len(targets),1)
+    return targets.reshape(len(targets), 1)
 
 
-def calculate_predictions(W, x):
+def calculate_predictions(w, x):
 
     if Settings.activation_function == "sigmoid":
-        return sigmoid(np.dot(W, x))
+        return sigmoid(np.dot(w, x))
     elif Settings.activation_function == "identity":
-        return np.dot(W, x)
+        return np.dot(w, x)
 
 
 def create_feature_vector(obs_history, action_history, predictions):
@@ -63,13 +64,13 @@ def create_feature_vector(obs_history, action_history, predictions):
     # adding the predictions from last time
     x = np.append(x, predictions)
 
-    return x.reshape(len(x),1)
+    return x.reshape(len(x), 1)
 
 
 def create_feature_vector_of_history(a):
 
     a_as_one_digit = 0
-    a_as_feature_vector = np.zeros((2**len(a),1))
+    a_as_feature_vector = np.zeros((2**len(a), 1))
     for i in range(len(a)):
         a_as_one_digit += a[len(a)-1-i] * (2 ** i)
     a_as_feature_vector[a_as_one_digit] = 1
@@ -79,9 +80,9 @@ def create_feature_vector_of_history(a):
 
 def experiment_file_reader(history_length=6):
 
-    y = np.asarray(np.loadtxt('predictions_y.txt', dtype=float))
-    c = np.asarray(np.loadtxt('extra_state_setting.txt', dtype=int))
-    w = np.asarray(np.loadtxt('weights_w.txt', dtype=float))
+    y = np.asarray(np.loadtxt('data/predictions_y.txt', dtype=float))
+    c = np.asarray(np.loadtxt('data/extra_state_setting.txt', dtype=int))
+    w = np.asarray(np.loadtxt('data/weights_w.txt', dtype=float))
     history_observation = []
     history_action = []
     for i in range(history_length):
@@ -91,16 +92,16 @@ def experiment_file_reader(history_length=6):
     initial_position = [c[12], c[13]]
     initial_direction = Direction(c[14])
 
-    return w,y, history_observation, history_action, initial_position, initial_direction
+    return w, y, history_observation, history_action, initial_position, initial_direction
 
 
 def save_to_file(weights, predictions, history_action, history_observation, agent_direction, agent_position):
 
-    np.savetxt('weights_w.txt', weights, fmt='%f')
-    np.savetxt('predictions_y.txt', predictions, fmt='%f')
+    np.savetxt('data/weights_w.txt', weights, fmt='%f')
+    np.savetxt('data/predictions_y.txt', predictions, fmt='%f')
     extra_setting = []
     extra_setting.extend(history_observation)
     extra_setting.extend(history_action)
     extra_setting.extend(agent_position)
     extra_setting.append(int(agent_direction))
-    np.savetxt('extra_state_setting.txt', extra_setting, fmt='%d')
+    np.savetxt('data/extra_state_setting.txt', extra_setting, fmt='%d')
