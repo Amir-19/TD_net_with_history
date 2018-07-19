@@ -3,7 +3,7 @@ import collections
 from utils import *
 
 
-class BitToBitGridWorldGUI():
+class BitToBitGridWorldGUI:
 
     def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction, _w, _y, _history_observation, _history_action, _history_length):
 
@@ -99,20 +99,22 @@ class BitToBitGridWorldGUI():
 
         pred_x = 6
         pred_y = 6
+        obs_color = gColorBW(True,self.environment.get_observation())
         if self.obs_pred is not None:
             gDelete(self.window, self.obs_pred)
         if x_y_inverse:
             # horizantal
-            self.obs_pred = gdFillRectR(self.window,300+((pred_x)*self.blocksize), 30+((pred_y+pred_dir_y)*self.blocksize),self.blocksize,3,'black')
+            self.obs_pred = gdFillRectR(self.window,300+((pred_x)*self.blocksize), 30+((pred_y+pred_dir_y)*self.blocksize),self.blocksize,3,obs_color)
         else:
             # vertical
-            self.obs_pred = gdFillRectR(self.window,300+((pred_x+pred_dir_x)*self.blocksize), 30+((pred_y)*self.blocksize),3,self.blocksize,'black')
-        for i in range(len(self.indicator)):
+            self.obs_pred = gdFillRectR(self.window,300+((pred_x+pred_dir_x)*self.blocksize), 30+((pred_y)*self.blocksize),3,self.blocksize,obs_color)
+
+        for i in range(len(self.indicator)-1,-1,-1):
             if self.tester_list[i] == 1:
                 prediction_value = min(self.y[i][0],1)
                 prediction_value = max(0,prediction_value)
                 pred_color = gColorBW(True,prediction_value)
-                a,b,c,d,e = self.get_the_gridcell_for_prediction(self.indicator[i])
+                a,b,c,d = self.get_the_gridcell_for_prediction(self.indicator[i])
                 if self.graphical_indicator_prediction[i] is not None:
                     gDelete(self.window, self.graphical_indicator_prediction[i])
                 if a == 1 and b == 0:
@@ -137,19 +139,15 @@ class BitToBitGridWorldGUI():
         if self.agent_prediction_direction == Direction.East:
             add_x = 1
             add_y = 0
-            x_y_inverse = False
         elif self.agent_prediction_direction == Direction.South:
             add_x = 0
             add_y = 1
-            x_y_inverse = True
         elif self.agent_prediction_direction == Direction.West:
             add_x = -1
             add_y = 0
-            x_y_inverse = False
         elif self.agent_prediction_direction == Direction.North:
             add_x = 0
             add_y = -1
-            x_y_inverse = True
         for i in indi:
             if i == "F":
                 pred_x += add_x
@@ -158,28 +156,17 @@ class BitToBitGridWorldGUI():
                 if add_x == 1 and add_y == 0:
                     add_x = 0
                     add_y = 1
-                    x_y_inverse = True
                 elif add_x == 0 and add_y == 1:
                     add_x = -1
                     add_y = 0
-                    x_y_inverse = False
                 elif add_x == -1 and add_y == 0:
                     add_x = 0
                     add_y = -1
-                    x_y_inverse = True
                 elif add_x == 0 and add_y == -1:
                     add_x = 1
                     add_y = 0
-                    x_y_inverse = False
 
-        if add_x == 1 and add_y == 0:
-            return add_x,add_y, pred_x, pred_y, x_y_inverse
-        elif add_x == 0 and add_y == 1:
-            return add_x,add_y, pred_x, pred_y, x_y_inverse
-        elif add_x == -1 and add_y == 0:
-            return add_x,add_y, pred_x, pred_y, x_y_inverse
-        elif add_x == 0 and add_y == -1:
-            return add_x,add_y, pred_x, pred_y, x_y_inverse
+        return add_x,add_y, pred_x, pred_y
 
     """
         draw the gridworld
@@ -256,7 +243,7 @@ def main():
 
     # gui creation
     history_length = 6
-    W, y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader(history_length=6)
+    W, y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader()
     m = 6
     n = 6
     obstacles = [[3, 1], [3, 2], [4, 2], [3, 3], [2, 3], [4, 5], [3, 5], [2, 5], [1, 5], [0, 5]]

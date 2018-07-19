@@ -11,10 +11,10 @@ def main():
     num_actions = 2
 
     # the td net with history attributes
-    history_length = Settings.history_length_observation
-
+    history_length_observation = Settings.history_length_observation
+    history_length_action = Settings.history_length_action
     n = 62 # since we have td net with 5 layers and 2 actions 2^6  -  2  =  62
-    m = 1 + (2 * (2**history_length)) + n # bias unit + 2 history (obs and action) + previous predictions
+    m = 1 + ((2**history_length_action)+ (2**history_length_observation)) + n # bias unit + 2 history (obs and action) + previous predictions
     step_size = Settings.step_size
     max_step = Settings.training_steps
 
@@ -26,8 +26,8 @@ def main():
     # 2. t = 0 it is actually 1 in the algorithm but 0 here (?)
     time_step = 0
     # setting up the history
-    observation_history = collections.deque(history_length*[None], history_length)
-    action_history = collections.deque(history_length*[None], history_length)
+    observation_history = collections.deque(history_length_observation*[None], history_length_observation)
+    action_history = collections.deque(history_length_action*[None], history_length_action)
 
     last_observation = None
     last_action = None
@@ -35,7 +35,7 @@ def main():
     # 3. choose a_{t-1} to observe o_{t} but since we have a history length we need to do this to fill the history
     # now we take as many actions to see a full history to create the state
     # after having all the elements of both history queues not None we can start updating
-    for i in range(history_length):
+    for i in range(max(history_length_action,history_length_observation)):
         action = np.random.choice(num_actions, 1)[0]
         if action == 0:
             environment.move_forward()
@@ -52,7 +52,7 @@ def main():
 
         # go to the next time step
         time_step += 1
-    for i in range(max_step - history_length):
+    for i in range(max_step - max(history_length_action,history_length_observation)):
 
         # 4. x_{t}
         x = create_feature_vector(observation_history, action_history, y)

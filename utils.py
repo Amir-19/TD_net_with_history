@@ -78,19 +78,20 @@ def create_feature_vector_of_history(a):
     return a_as_feature_vector
 
 
-def experiment_file_reader(history_length=6):
+def experiment_file_reader(history_length_action = 6, history_length_observation = 6):
 
     y = np.asarray(np.loadtxt('data/predictions_y.txt', dtype=float))
     c = np.asarray(np.loadtxt('data/extra_state_setting.txt', dtype=int))
     w = np.asarray(np.loadtxt('data/weights_w.txt', dtype=float))
     history_observation = []
     history_action = []
-    for i in range(history_length):
+    for i in range(history_length_observation):
         history_observation.append(c[i])
-        history_action.append(c[i+history_length])
-
-    initial_position = [c[12], c[13]]
-    initial_direction = Direction(c[14])
+    for i in range(history_length_observation,history_length_observation+history_length_action):
+        history_action.append(c[i])
+    new_index = history_length_observation+history_length_action
+    initial_position = [c[new_index], c[new_index+1]]
+    initial_direction = Direction(c[new_index+2])
 
     return w, y, history_observation, history_action, initial_position, initial_direction
 
