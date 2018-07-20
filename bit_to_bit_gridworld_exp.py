@@ -2,7 +2,7 @@ from utils import *
 import collections
 import numpy as np
 from settings import *
-
+from progress_bar import *
 
 def main():
     # create the environment
@@ -13,15 +13,17 @@ def main():
     # the td net with history attributes
     history_length_observation = Settings.history_length_observation
     history_length_action = Settings.history_length_action
-    n = 62 # since we have td net with 5 layers and 2 actions 2^6  -  2  =  62
-    m = 1 + ((2**history_length_action)+ (2**history_length_observation)) + n # bias unit + 2 history (obs and action) + previous predictions
+    # since we have td net with 5 layers and 2 actions 2^6  -  2  =  62
+    n = 2**(Settings.question_network_layer+1) - 2
+    # bias unit + 2 history (obs and action) + previous predictions
+    m = 1 + ((2**history_length_action) + (2**history_length_observation)) + n
     step_size = Settings.step_size
     max_step = Settings.training_steps
 
     # 1. W_{1}
-    W = np.full((n, m),0)
+    w = np.full((n, m), 0)
     # 1. y_{0}
-    y = np.ones((n,1))*0.5
+    y = np.ones((n, 1))*0.5
 
     # 2. t = 0 it is actually 1 in the algorithm but 0 here (?)
     time_step = 0
@@ -52,13 +54,13 @@ def main():
 
         # go to the next time step
         time_step += 1
-    for i in range(max_step - max(history_length_action,history_length_observation)):
+    for i in range(max_step - max(history_length_action, history_length_observation)):
 
         # 4. x_{t}
         x = create_feature_vector(observation_history, action_history, y)
 
         # 5. y_{t} = σ(W_{t}x_{t})
-        y = calculate_predictions(W,x)
+        y = calculate_predictions(w,x)
 
         # 6. choose a_{t} and observe o_{t+1}
         action = np.random.choice(num_actions, 1)[0]
@@ -83,27 +85,26 @@ def main():
         xtp1 = create_feature_vector(observation_history, action_history, y)
 
         # 9. ỹ_{t+1} = σ(W_{t}x_{t+1})
-        ỹ = calculate_predictions(W, xtp1)
+        ỹ = calculate_predictions(w, xtp1)
 
         # 10. z_{t}
         z = calculate_targets(last_observation, ỹ)
 
         # 11. update weights W
         if Settings.activation_function == "identity":
-            update = step_size*(np.outer(np.multiply(z-y,c).T,x))
+            update = step_size*(np.outer(np.multiply(z-y, c).T, x))
         elif Settings.activation_function == "sigmoid":
-            part1 = np.multiply(z-y,c)
-            part2 = np.multiply(part1,y)
-            part3 = np.multiply(part2,1-y)
-            update = step_size*(np.outer(part3.T,x))
+            part1 = np.multiply(z-y, c)
+            part2 = np.multiply(part1, y)
+            part3 = np.multiply(part2, 1-y)
+            update = step_size*(np.outer(part3.T, x))
 
-        W = W + update
+        w = w + update
 
         # 12. t= t+1
         time_step += 1
-        if time_step % 1000000 == 0:
-            print(time_step)
-    save_to_file(W, y, action_history, observation_history, environment.agent_direction, environment.agent_position)
+        print_progress(time_step,max_step, prefix = 'Progress:', suffix = 'Complete', decimals = 2, barLength = 50)
+    save_to_file(w, y, action_history, observation_history, environment.agent_direction, environment.agent_position)
 
 
 if __name__ == "__main__":
