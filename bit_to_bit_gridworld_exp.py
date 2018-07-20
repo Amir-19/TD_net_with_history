@@ -14,9 +14,9 @@ def main():
     # the td net with history attributes
     history_length_observation = Settings.history_length_observation
     history_length_action = Settings.history_length_action
-    # since we have td net with 5 layers and 2 actions 2^6  -  2  =  62
+    # for instance, if we have td net with 5 layers and 2 actions n would be 62 as 2^6  -  2  =  62
     n = 2**(Settings.question_network_layer+1) - 2
-    # bias unit + 2 history (obs and action) + previous predictions
+    # bias unit +  histories (obs and action) + previous predictions
     m = 1 + ((2**history_length_action) + (2**history_length_observation)) + n
     step_size = Settings.step_size
     max_step = Settings.training_steps

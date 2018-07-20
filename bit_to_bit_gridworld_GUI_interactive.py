@@ -23,8 +23,6 @@ class BitToBitGridWorldGUI:
         self.history_length_action = _history_length_action
         self.observation_history = collections.deque(_history_observation, self.history_length_observation)
         self.action_history = collections.deque(_history_action, self.history_length_action)
-        print(self.observation_history)
-        print(self.action_history)
         self.y = _y.reshape(len(_y), 1)
 
         # prediction graphic stuff
@@ -45,6 +43,7 @@ class BitToBitGridWorldGUI:
         self.blocksize = 30
         self.window = Gwindow(gdViewport = (20, 25, 800, 600))
         self.draw_gridworld()
+        self.draw_history()
         self.agent_prediction = None
         self.draw_predictions()
         self.agent = None
@@ -171,6 +170,32 @@ class BitToBitGridWorldGUI:
         return add_x,add_y, pred_x, pred_y
 
     """
+        draw the history
+    """
+    def draw_history(self):
+        bgcolor = gColorRGB255(True, 213, 183, 145)
+        gdFillRectR(self.window, 35,380, max(self.history_length_action,self.history_length_observation)*self.blocksize,4*self.blocksize-15,bgcolor)
+        gdDrawTextCentered(self.window,'at-1',('Helvetica',9,'normal'),52,390)
+        padding = 10
+        for i in range(self.history_length_action):
+            if self.action_history[i] == 1:
+                label = 'at'+ str(-(i+1))
+                gdDrawTextCentered(self.window,label,('Helvetica',9,'normal'),40+12+(i)*self.blocksize,390)
+                gdFillRectR(self.window,40+(i)*self.blocksize,400,self.blocksize-padding,self.blocksize-padding,'black')
+            elif self.action_history[i] == 0:
+                label = 'at'+ str(-(i+1))
+                gdDrawTextCentered(self.window,label,('Helvetica',9,'normal'),40+12+(i)*self.blocksize,390)
+                gdFillRectR(self.window,40+(i)*self.blocksize,400,self.blocksize-padding,self.blocksize-padding,'white')
+        for i in range(self.history_length_observation):
+            if self.observation_history[i] == 1:
+                label = 'ot'+ str(-(i+1))
+                gdDrawTextCentered(self.window,label,('Helvetica',9,'normal'),40+12+(i)*self.blocksize,440)
+                gdFillRectR(self.window,40+(i)*self.blocksize,450,self.blocksize-padding,self.blocksize-padding,'black')
+            elif self.observation_history[i] == 0:
+                label = 'ot'+ str(-(i+1))
+                gdDrawTextCentered(self.window,label,('Helvetica',9,'normal'),40+12+(i)*self.blocksize,440)
+                gdFillRectR(self.window,40+(i)*self.blocksize,450,self.blocksize-padding,self.blocksize-padding,'white')
+    """
         draw the gridworld
     """
     def draw_gridworld(self):
@@ -219,6 +244,7 @@ class BitToBitGridWorldGUI:
         self.draw_agent()
         self.action_history.appendleft(0)
         self.observation_history.appendleft(self.environment.get_observation())
+        self.draw_history()
         self.y = calculate_predictions(self.W, create_feature_vector(self.observation_history, self.action_history, self.y))
         self.draw_predictions()
 
@@ -230,6 +256,7 @@ class BitToBitGridWorldGUI:
         self.draw_agent()
         self.action_history.appendleft(1)
         self.observation_history.appendleft(self.environment.get_observation())
+        self.draw_history()
         self.y = calculate_predictions(self.W, create_feature_vector(self.observation_history, self.action_history, self.y))
         self.draw_predictions()
 
