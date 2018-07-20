@@ -21,6 +21,15 @@ def main():
     step_size = Settings.step_size
     max_step = Settings.training_steps
 
+    # error measure stuff
+    indicator = ["" for x in range(n)]
+    indicator[0] = "F"
+    indicator[1] = "R"
+
+    for i in range(int((n-2)/2)):
+        indicator[2*(i+1)] = indicator[i]+"F"
+        indicator[2*(i+1)+1] = indicator[i]+"R"
+
     # 1. W_{1}
     w = np.full((n, m), 0)
     # 1. y_{0}

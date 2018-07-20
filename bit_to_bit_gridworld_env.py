@@ -118,3 +118,59 @@ class BitToBitGridWorld:
             return 1
         else:
             return 0
+
+    """
+        return the agent's observation from a specific position and direction.
+        which is 1 if facing an obstacle, 0 otherwise
+    """
+    def get_observation_specific(self, agent_pos, agent_dir):
+
+        next_position = agent_pos.copy()
+        direction = agent_dir.copy()
+        if direction == Direction.North:
+            next_position[0] += 1
+        elif direction == Direction.East:
+            next_position[1] += 1
+        elif direction == Direction.South:
+            next_position[0] -= 1
+        elif direction == Direction.West:
+            next_position[1] -= 1
+
+        if not self.is_in_grid(next_position):
+            return 1
+        else:
+            return 0
+    """
+        return the agent observation after a series of actions, this helps to calculate the td network node error in
+        which this is used as the oracle value for the node.
+    """
+    def get_n_step_observation(self, sequence):
+
+        direction = self.agent_direction
+        position = self.agent_position.copy()
+        for action in sequence:
+            if action == "R":
+                if direction == Direction.North:
+                    direction = Direction.East
+                elif direction == Direction.East:
+                    direction = Direction.South
+                elif self.agent_direction == Direction.South:
+                    direction = Direction.West
+                elif self.agent_direction == Direction.West:
+                    direction = Direction.North
+            elif action == "F":
+                next_position = position.copy()
+
+                if direction == Direction.North:
+                    next_position[0] += 1
+                elif direction == Direction.East:
+                    next_position[1] += 1
+                elif direction == Direction.South:
+                    next_position[0] -= 1
+                elif direction == Direction.West:
+                    next_position[1] -= 1
+
+                if self.is_in_grid(next_position):
+                    position = next_position.copy()
+
+        return self.get_observation_specific(position, direction)
