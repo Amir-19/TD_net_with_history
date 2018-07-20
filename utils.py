@@ -78,7 +78,7 @@ def create_feature_vector_of_history(a):
     return a_as_feature_vector
 
 
-def experiment_file_reader(history_length_action = 6, history_length_observation = 6):
+def experiment_file_reader(history_length_action = Settings.history_length_action, history_length_observation = Settings.history_length_observation):
 
     y = np.asarray(np.loadtxt('data/predictions_y.txt', dtype=float))
     c = np.asarray(np.loadtxt('data/extra_state_setting.txt', dtype=int))

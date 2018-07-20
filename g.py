@@ -1188,7 +1188,6 @@ def gQuit():             #<a name="gQuit"</a>[<a href="g.html#gQuit">Doc</a>]
         w.gCloseView()
     GDEVICE.update()
     GDEVICE.quit()
-
     
 def gDelete (view, object):      #<a name="gDelete"</a>[<a href="g.html#gDelete">Doc</a>]
     "Deletes object (an item or list of items created by the gDraw or gdDraw routines) from view"

@@ -5,7 +5,7 @@ from utils import *
 
 class BitToBitGridWorldGUI:
 
-    def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction, _w, _y, _history_observation, _history_action, _history_length):
+    def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction, _w, _y, _history_observation, _history_action, _history_length_observation, _history_length_action):
 
         # environment attributes
         self.m = _m
@@ -19,10 +19,12 @@ class BitToBitGridWorldGUI:
 
         # interactive problem controller
         self.W = _w
-        self.history_length = _history_length
-        self.observation_history = collections.deque(_history_observation, self.history_length)
-        self.action_history = collections.deque(_history_action, self.history_length)
-        self.history_length = _history_length
+        self.history_length_observation = _history_length_observation
+        self.history_length_action = _history_length_action
+        self.observation_history = collections.deque(_history_observation, self.history_length_observation)
+        self.action_history = collections.deque(_history_action, self.history_length_action)
+        print(self.observation_history)
+        print(self.action_history)
         self.y = _y.reshape(len(_y), 1)
 
         # prediction graphic stuff
@@ -242,12 +244,13 @@ class BitToBitGridWorldGUI:
 def main():
 
     # gui creation
-    history_length = 6
-    W, y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader()
+    history_length_observation = Settings.history_length_observation
+    history_length_aciton = Settings.history_length_action
+    w, y, history_observation, history_action, initial_position, initial_direction = experiment_file_reader()
     m = 6
     n = 6
     obstacles = [[3, 1], [3, 2], [4, 2], [3, 3], [2, 3], [4, 5], [3, 5], [2, 5], [1, 5], [0, 5]]
-    gui = BitToBitGridWorldGUI(m, n, obstacles, initial_position, initial_direction, W, y, history_observation, history_action, history_length)
+    gui = BitToBitGridWorldGUI(m, n, obstacles, initial_position, initial_direction, w, y, history_observation, history_action, history_length_observation, history_length_aciton)
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ import numpy as np
 from settings import *
 from progress_bar import *
 
+
 def main():
     # create the environment
     environment = BitToBitGridWorld(6, 6, [[3, 1], [3, 2], [4, 2], [3, 3], [2, 3],
@@ -96,14 +97,17 @@ def main():
         elif Settings.activation_function == "sigmoid":
             part1 = np.multiply(z-y, c)
             part2 = np.multiply(part1, y)
-            part3 = np.multiply(part2, 1-y)
+            part3 = np.multiply(part2, 1.0-y)
             update = step_size*(np.outer(part3.T, x))
-
+        else:
+            update = 0
         w = w + update
 
         # 12. t= t+1
         time_step += 1
-        print_progress(time_step,max_step, prefix = 'Progress:', suffix = 'Complete', decimals = 2, barLength = 50)
+
+        print_progress(time_step,max_step, prefix = 'Progress:', suffix = 'Complete', decimals = 2, bar_length = 50)
+    # save the results to the file
     save_to_file(w, y, action_history, observation_history, environment.agent_direction, environment.agent_position)
 
 
