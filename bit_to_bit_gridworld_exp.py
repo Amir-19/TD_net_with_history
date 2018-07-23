@@ -22,7 +22,7 @@ def main():
     max_step = Settings.training_steps
 
     # error measuring related stuff
-    error_measuring_frequency = 100000
+    error_measuring_frequency = Settings.error_measuring_frequency
     node_error = np.zeros((n,1))
     time_put_in_error = 0
     RMSE = []
