@@ -20,7 +20,7 @@ def main():
     m = 1 + ((2**history_length_action) + (2**history_length_observation)) + n
     step_size = Settings.step_size
     max_step = Settings.training_steps
-
+    error_measuring_frequency = 100
     # error measure stuff
     indicator = ["" for x in range(n)]
     indicator[0] = "F"
@@ -111,6 +111,8 @@ def main():
         else:
             update = 0
         w = w + update
+
+        # error measure step
 
         # 12. t= t+1
         time_step += 1
