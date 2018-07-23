@@ -123,10 +123,10 @@ class BitToBitGridWorld:
         return the agent's observation from a specific position and direction.
         which is 1 if facing an obstacle, 0 otherwise
     """
-    def get_observation_specific(self, agent_pos, agent_dir):
+    def get_observation_in_pos(self, agent_pos, agent_dir):
 
         next_position = agent_pos.copy()
-        direction = agent_dir.copy()
+        direction = agent_dir
         if direction == Direction.North:
             next_position[0] += 1
         elif direction == Direction.East:
@@ -154,9 +154,9 @@ class BitToBitGridWorld:
                     direction = Direction.East
                 elif direction == Direction.East:
                     direction = Direction.South
-                elif self.agent_direction == Direction.South:
+                elif direction == Direction.South:
                     direction = Direction.West
-                elif self.agent_direction == Direction.West:
+                elif direction == Direction.West:
                     direction = Direction.North
             elif action == "F":
                 next_position = position.copy()
@@ -173,4 +173,4 @@ class BitToBitGridWorld:
                 if self.is_in_grid(next_position):
                     position = next_position.copy()
 
-        return self.get_observation_specific(position, direction)
+        return self.get_observation_in_pos(position, direction)
