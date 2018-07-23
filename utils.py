@@ -78,7 +78,8 @@ def create_feature_vector_of_history(a):
     return a_as_feature_vector
 
 
-def experiment_file_reader(history_length_action = Settings.history_length_action, history_length_observation = Settings.history_length_observation):
+def experiment_file_reader(history_length_action=Settings.history_length_action,
+                           history_length_observation=Settings.history_length_observation):
 
     y = np.asarray(np.loadtxt('data/predictions_y.txt', dtype=float))
     c = np.asarray(np.loadtxt('data/extra_state_setting.txt', dtype=int))
@@ -87,7 +88,7 @@ def experiment_file_reader(history_length_action = Settings.history_length_actio
     history_action = []
     for i in range(history_length_observation):
         history_observation.append(c[i])
-    for i in range(history_length_observation,history_length_observation+history_length_action):
+    for i in range(history_length_observation, history_length_observation+history_length_action):
         history_action.append(c[i])
     new_index = history_length_observation+history_length_action
     initial_position = [c[new_index], c[new_index+1]]
@@ -96,10 +97,11 @@ def experiment_file_reader(history_length_action = Settings.history_length_actio
     return w, y, history_observation, history_action, initial_position, initial_direction
 
 
-def save_to_file(weights, predictions, history_action, history_observation, agent_direction, agent_position):
+def save_to_file(weights, predictions, history_action, history_observation, agent_direction, agent_position, rmse):
 
     np.savetxt('data/weights_w.txt', weights, fmt='%f')
     np.savetxt('data/predictions_y.txt', predictions, fmt='%f')
+    np.savetxt('data/rmse.txt', rmse, fmt='%f')
     extra_setting = []
     extra_setting.extend(history_observation)
     extra_setting.extend(history_action)

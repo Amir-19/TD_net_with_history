@@ -20,8 +20,13 @@ def main():
     m = 1 + ((2**history_length_action) + (2**history_length_observation)) + n
     step_size = Settings.step_size
     max_step = Settings.training_steps
-    error_measuring_frequency = 100
-    # error measure stuff
+
+    # error measuring related stuff
+    error_measuring_frequency = 100000
+    node_error = np.zeros((n,1))
+    time_put_in_error = 0
+    RMSE = []
+
     indicator = ["" for x in range(n)]
     indicator[0] = "F"
     indicator[1] = "R"
@@ -30,6 +35,7 @@ def main():
         indicator[2*(i+1)] = indicator[i]+"F"
         indicator[2*(i+1)+1] = indicator[i]+"R"
 
+    # TD net algorithm start
     # 1. W_{1}
     w = np.full((n, m), 0)
     # 1. y_{0}
@@ -101,10 +107,11 @@ def main():
         z = calculate_targets(last_observation, ỹ)
 
         # 11. update weights W
+        error_vector = z-y
         if Settings.activation_function == "identity":
-            update = step_size*(np.outer(np.multiply(z-y, c).T, x))
+            update = step_size*(np.outer(np.multiply(error_vector, c).T, x))
         elif Settings.activation_function == "sigmoid":
-            part1 = np.multiply(z-y, c)
+            part1 = np.multiply(error_vector, c)
             part2 = np.multiply(part1, y)
             part3 = np.multiply(part2, 1.0-y)
             update = step_size*(np.outer(part3.T, x))
@@ -113,13 +120,21 @@ def main():
         w = w + update
 
         # error measure step
+        node_error += np.multiply(error_vector,error_vector)
+        time_put_in_error += 0
 
+        if time_put_in_error == error_measuring_frequency:
+            RMSEi = np.sqrt(node_error)
+            RMSE.append(np.sum(RMSEi)/ RMSEi.shape[0])  # network error
+            node_error = np.zeros((n,1))
+            time_put_in_error = 0
         # 12. t= t+1
         time_step += 1
 
         print_progress(time_step,max_step, prefix = 'Progress:', suffix = 'Complete', decimals = 2, bar_length = 50)
+        RMSE = np.asarray(RMSE)
     # save the results to the file
-    save_to_file(w, y, action_history, observation_history, environment.agent_direction, environment.agent_position)
+    save_to_file(w, y, action_history, observation_history, environment.agent_direction, environment.agent_position, RMSE)
 
 
 if __name__ == "__main__":
