@@ -120,20 +120,23 @@ def main():
         w = w + update
 
         # error measure step
+        true_error =
         node_error += np.multiply(error_vector,error_vector)
-        time_put_in_error += 0
+        time_put_in_error += 1
 
         if time_put_in_error == error_measuring_frequency:
             RMSEi = np.sqrt(node_error)
             RMSE.append(np.sum(RMSEi)/ RMSEi.shape[0])  # network error
             node_error = np.zeros((n,1))
             time_put_in_error = 0
+        
         # 12. t= t+1
         time_step += 1
 
+
         print_progress(time_step,max_step, prefix = 'Progress:', suffix = 'Complete', decimals = 2, bar_length = 50)
-        RMSE = np.asarray(RMSE)
     # save the results to the file
+    RMSE = np.asarray(RMSE)
     save_to_file(w, y, action_history, observation_history, environment.agent_direction, environment.agent_position, RMSE)
 
 

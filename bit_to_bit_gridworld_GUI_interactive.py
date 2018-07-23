@@ -58,7 +58,6 @@ class BitToBitGridWorldGUI:
     """
     def draw_predictions(self):
         bgcolor = gColorRGB255(True, 213, 183, 145)
-        print(self.y.reshape(1,self.y.shape[0]))
         # background
         gdFillRectR(self.window, 303,33, 13*self.blocksize,13*self.blocksize,bgcolor)
 

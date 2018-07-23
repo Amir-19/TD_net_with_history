@@ -8,4 +8,4 @@ class Settings(object):
     history_length_action = 6
     question_network_layer = 5
     activation_function = "sigmoid"  # the other option is "identity"
-    training_steps = 50000000
+    training_steps = 5000000
