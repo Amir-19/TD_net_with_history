@@ -120,8 +120,8 @@ def main():
         w = w + update
 
         # error measure step
-        true_error =
-        node_error += np.multiply(error_vector,error_vector)
+        true_error = calculate_true_predictions(environment,indicator) - y
+        node_error += np.multiply(true_error,true_error)
         time_put_in_error += 1
 
         if time_put_in_error == error_measuring_frequency:
@@ -129,7 +129,7 @@ def main():
             RMSE.append(np.sum(RMSEi)/ RMSEi.shape[0])  # network error
             node_error = np.zeros((n,1))
             time_put_in_error = 0
-        
+
         # 12. t= t+1
         time_step += 1
 

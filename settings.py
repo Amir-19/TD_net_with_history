@@ -3,7 +3,7 @@
 
 class Settings(object):
 
-    step_size = 0.1
+    step_size = 0.05
     history_length_observation = 6
     history_length_action = 6
     question_network_layer = 5

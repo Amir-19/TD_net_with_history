@@ -3,8 +3,12 @@ from utils import *
 import collections
 from bit_to_bit_gridworld_env import *
 
-sum = np.zeros((4,1))
-a=np.arange(4).reshape(4,1)
-sum+=np.multiply(a,a)
-sum+=np.multiply(a,a)
-print(np.sqrt(sum))
+
+d = dict()
+
+key = ((1,2),"haha")
+key2 = ((1,3),"haha")
+d[key] = (9,1)
+d[key2] = (4,2)
+if key in d:
+    print(d[key])

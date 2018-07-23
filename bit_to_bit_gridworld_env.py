@@ -41,7 +41,7 @@ class BitToBitGridWorld:
             self.obstacles.append(obstacle)
         self.agent_position = _agent_position
         self.agent_direction = _agent_direction
-
+        self.true_target_dict = dict()
     """
         check whether a position is in the grid or not. It also checks whether the position is
         on of the obstacles or not. In other words, it checks whether agent can be on the
@@ -148,29 +148,36 @@ class BitToBitGridWorld:
 
         direction = self.agent_direction
         position = self.agent_position.copy()
-        for action in sequence:
-            if action == "R":
-                if direction == Direction.North:
-                    direction = Direction.East
-                elif direction == Direction.East:
-                    direction = Direction.South
-                elif direction == Direction.South:
-                    direction = Direction.West
-                elif direction == Direction.West:
-                    direction = Direction.North
-            elif action == "F":
-                next_position = position.copy()
 
-                if direction == Direction.North:
-                    next_position[0] += 1
-                elif direction == Direction.East:
-                    next_position[1] += 1
-                elif direction == Direction.South:
-                    next_position[0] -= 1
-                elif direction == Direction.West:
-                    next_position[1] -= 1
+        # first check whether we have the true observation stored or not, if not we calculate it and store it.
+        key = (position[0],position[1], direction, sequence)
+        if key in self.true_target_dict:
+            return self.true_target_dict[key]
+        else:
+            for action in sequence:
+                if action == "R":
+                    if direction == Direction.North:
+                        direction = Direction.East
+                    elif direction == Direction.East:
+                        direction = Direction.South
+                    elif direction == Direction.South:
+                        direction = Direction.West
+                    elif direction == Direction.West:
+                        direction = Direction.North
+                elif action == "F":
+                    next_position = position.copy()
 
-                if self.is_in_grid(next_position):
-                    position = next_position.copy()
+                    if direction == Direction.North:
+                        next_position[0] += 1
+                    elif direction == Direction.East:
+                        next_position[1] += 1
+                    elif direction == Direction.South:
+                        next_position[0] -= 1
+                    elif direction == Direction.West:
+                        next_position[1] -= 1
 
-        return self.get_observation_in_pos(position, direction)
+                    if self.is_in_grid(next_position):
+                        position = next_position.copy()
+
+            self.true_target_dict[key] = self.get_observation_in_pos(position, direction)
+            return self.true_target_dict[key]

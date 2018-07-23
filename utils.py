@@ -78,6 +78,14 @@ def create_feature_vector_of_history(a):
     return a_as_feature_vector
 
 
+def calculate_true_predictions(environment, indicator):
+
+    true_targets = np.zeros((len(indicator), 1))
+    for i in range(len(indicator)):
+        true_targets[i] = environment.get_n_step_observation(indicator[i])
+    return true_targets
+
+
 def experiment_file_reader(history_length_action=Settings.history_length_action,
                            history_length_observation=Settings.history_length_observation):
 
