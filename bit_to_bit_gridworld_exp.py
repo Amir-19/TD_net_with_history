@@ -125,14 +125,13 @@ def main():
         time_put_in_error += 1
 
         if time_put_in_error == error_measuring_frequency:
-            RMSEi = np.sqrt(node_error)
+            RMSEi = np.sqrt(node_error/ error_measuring_frequency)
             RMSE.append(np.sum(RMSEi)/ RMSEi.shape[0])  # network error
             node_error = np.zeros((n,1))
             time_put_in_error = 0
 
         # 12. t= t+1
         time_step += 1
-
 
         print_progress(time_step,max_step, prefix = 'Progress:', suffix = 'Complete', decimals = 2, bar_length = 50)
     # save the results to the file
