@@ -22,7 +22,6 @@ class Observation(Enum):
 
 
 class BitToBitGridWorld:
-
     """
         create an m*n gridworld
         _m: rows
@@ -31,6 +30,7 @@ class BitToBitGridWorld:
         _agent_position: the agent's current position on the grid
         _agent_direction: the agent's current direction
     """
+
     def __init__(self, _m, _n, _obstacles, _agent_position, _agent_direction):
 
         # environment attributes
@@ -42,6 +42,7 @@ class BitToBitGridWorld:
         self.agent_position = _agent_position
         self.agent_direction = _agent_direction
         self.true_target_dict = dict()
+
     """
         check whether a position is in the grid or not. It also checks whether the position is
         on of the obstacles or not. In other words, it checks whether agent can be on the
@@ -49,6 +50,7 @@ class BitToBitGridWorld:
 
         _position: the position to check
     """
+
     def is_in_grid(self, _position):
 
         if _position[0] < 0 or _position[0] >= self.m or _position[1] < 0 or _position[1] >= self.n:
@@ -60,6 +62,7 @@ class BitToBitGridWorld:
     """
         add an obstacle to the list of obstacles
     """
+
     def add_obstacle(self, _obstacle):
 
         self.obstacles.append(_obstacle)
@@ -67,6 +70,7 @@ class BitToBitGridWorld:
     """
         moves agent one step forward in the direction it is heading
     """
+
     def move_forward(self):
 
         next_position = self.agent_position.copy()
@@ -85,6 +89,7 @@ class BitToBitGridWorld:
     """
         turn agent's direction clockwise
     """
+
     def turn_clockwise(self):
 
         if self.agent_direction == Direction.North:
@@ -102,6 +107,7 @@ class BitToBitGridWorld:
     """
         return the agent's observation which is 1 if facing an obstacle, 0 otherwise
     """
+
     def get_observation(self):
 
         next_position = self.agent_position.copy()
@@ -123,6 +129,7 @@ class BitToBitGridWorld:
         return the agent's observation from a specific position and direction.
         which is 1 if facing an obstacle, 0 otherwise
     """
+
     def get_observation_in_pos(self, agent_pos, agent_dir):
 
         next_position = agent_pos.copy()
@@ -140,17 +147,19 @@ class BitToBitGridWorld:
             return 1
         else:
             return 0
+
     """
         return the agent observation after a series of actions, this helps to calculate the td network node error in
         which this is used as the oracle value for the node.
     """
+
     def get_n_step_observation(self, sequence):
 
         direction = self.agent_direction
         position = self.agent_position.copy()
 
         # first check whether we have the true observation stored or not, if not we calculate it and store it.
-        key = (position[0],position[1], direction, sequence)
+        key = (position[0], position[1], direction, sequence)
         if key in self.true_target_dict:
             return self.true_target_dict[key]
         else:
