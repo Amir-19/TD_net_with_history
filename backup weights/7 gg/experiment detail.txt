@@ -1,0 +1,7 @@
+activation_function="sigmoid"
+step_size=0.01
+history_length_action=6
+history_length_observation=6
+td_net_depth=5
+training_steps = 50000000
+
