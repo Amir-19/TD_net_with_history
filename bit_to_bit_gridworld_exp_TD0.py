@@ -107,9 +107,9 @@ def main():
         z = calculate_targets(last_observation, ỹ)
 
         # 11. update weights W
-        # error_vector = z - y
+        error_vector = z - y
         ####### JUST TO CHECK FOR SANITY
-        error_vector = calculate_true_predictions(environment, indicator) - y
+        #error_vector = calculate_true_predictions(environment, indicator) - y
 
         if Settings.activation_function == "identity":
             update = step_size * (np.outer(np.multiply(error_vector, c).T, x))

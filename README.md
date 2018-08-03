@@ -3,8 +3,6 @@ Gridworld experiment for Temporal difference network with history
 
 ### To-do list
 
-- [x] graphics for prediction, history
-- [x] progress bar
 - [ ] show all predictions for the same question
 - [ ] implement network error
 - [ ] save setting and read them for each experiment
@@ -21,4 +19,5 @@ Gridworld experiment for Temporal difference network with history
 - [ ] is the update at time 't' correct ? (double check)
 
 ### next version features
-- [ ] TD lambda networks
+- [ ] TD lambda network algorithm
+- [ ] on-policy OTD network algorithm

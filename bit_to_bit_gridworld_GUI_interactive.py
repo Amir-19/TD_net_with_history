@@ -123,17 +123,6 @@ class BitToBitGridWorldGUI:
 
         pred_x = 6
         pred_y = 6
-        obs_color = gColorBW(True, self.environment.get_observation())
-        if self.obs_pred is not None:
-            gDelete(self.window, self.obs_pred)
-        if x_y_inverse:
-            # horizantal
-            self.obs_pred = gdFillRectR(self.window, 300 + ((pred_x) * self.blocksize),
-                                        30 + ((pred_y + pred_dir_y) * self.blocksize), self.blocksize, 3, obs_color)
-        else:
-            # vertical
-            self.obs_pred = gdFillRectR(self.window, 300 + ((pred_x + pred_dir_x) * self.blocksize),
-                                        30 + ((pred_y) * self.blocksize), 3, self.blocksize, obs_color)
 
         for i in range(len(self.indicator) - 1, -1, -1):
             if self.tester_list[i] == 1:
@@ -164,6 +153,17 @@ class BitToBitGridWorldGUI:
                     self.graphical_indicator_prediction[i] = gdFillRectR(self.window, 300 + ((c) * self.blocksize),
                                                                          30 + ((d + b + 1) * self.blocksize),
                                                                          self.blocksize, 3, pred_color)
+        obs_color = gColorBW(True, self.environment.get_observation())
+        if self.obs_pred is not None:
+            gDelete(self.window, self.obs_pred)
+        if x_y_inverse:
+            # horizantal
+            self.obs_pred = gdFillRectR(self.window, 300 + ((pred_x) * self.blocksize),
+                                        30 + ((pred_y + pred_dir_y) * self.blocksize), self.blocksize, 3, obs_color)
+        else:
+            # vertical
+            self.obs_pred = gdFillRectR(self.window, 300 + ((pred_x + pred_dir_x) * self.blocksize),
+                                        30 + ((pred_y) * self.blocksize), 3, self.blocksize, obs_color)
 
     """
         get the position of a specific prediction, y_{i}, at the prediction GUI
