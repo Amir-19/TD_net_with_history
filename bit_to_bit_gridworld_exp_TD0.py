@@ -3,7 +3,7 @@ import collections
 import numpy as np
 from settings import *
 from progress_bar import *
-
+import time
 
 def main():
     # create the environment
