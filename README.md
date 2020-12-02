@@ -11,6 +11,7 @@ Interactive GUI tool to play around bit-to-bit gridworld:
 
 
 To read more about TD network:
+
 1.Sutton, R. S., Tanner, B. (2005) [Temporal-Difference Networks](http://incompleteideas.net/papers/sutton-tanner-04.pdf)
 
 2.Sutton, R. S., Rafols, E. J., Koop, A. (2006). [Temporal abstraction in temporal-difference networks](http://incompleteideas.net/papers/nips05TDoptionsOnline.pdf)
