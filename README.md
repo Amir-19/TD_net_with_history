@@ -2,9 +2,11 @@
 Bit-to-bit Gridworld experiment for Temporal difference network with history
 
 Train TD network on bit-to-bit gridworld: 
+
   python bit_to_bit_gridworld_exp_TD0.py
   
 Interactive GUI tool to play around bit-to-bit gridworld: 
+
   python bit_to_bit_gridworld_GUI_interactive.py
 
 
